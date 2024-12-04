@@ -1,0 +1,49 @@
+.hamburger_container {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  transition: all 1s;
+  position: absolute;
+  top: 3%;
+  left: 3%;
+  height: 35px;
+  z-index: 989999;
+  opacity: 0.5;
+}
+
+.hamburger_line {
+  height: 4px;
+  width: 25px;
+  background-color: #fff;
+  margin-bottom: 5px;
+  transition: all 1s;
+  border-radius: 15px;
+}
+
+.display_none {
+  display: none;
+}
+
+.rotate45 {
+  transform: rotate(45deg);
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+
+.rotate135 {
+  transform: rotate(135deg);
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+.WBtns {
+  display: flex;
+  /* flex-direction: column; */
+  gap: 10px;
+  width: 50%;
+  align-items: center;
+  justify-content: center;
+}

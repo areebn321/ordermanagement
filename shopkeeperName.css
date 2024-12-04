@@ -1,0 +1,70 @@
+.makeShopOrder {
+  position: relative; /* Relative positioning to allow absolute dropdown positioning */
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  /* border: 1px solid #ccc; */
+}
+
+#savedNamesDisplayArea {
+  position: absolute;
+  top: 100%;
+  left: 5%;
+  width: 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 1px solid #ccc;
+  background-color: black; /* Set the background color to black */
+  color: white; /* Set text color to white */
+  max-height: 150px;
+  overflow-y: auto;
+  z-index: 999; /* Make sure it appears above other content */
+  display: none; /* Hide the dropdown initially */
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.shopkeeper-name-item {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #444; /* Dark border for separation */
+  transition: all 0.3s ease;
+}
+
+.shopkeeper-name-item:hover {
+  background-color: #555; /* Highlight when hovering */
+}
+.saved-names-list {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  transition: all 0.3s ease;
+}
+
+.shopkeeper-name-item-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.shopkeeper-name-item {
+  flex-grow: 1;
+}
+
+.delete-cross {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

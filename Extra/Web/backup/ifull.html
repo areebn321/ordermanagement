@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Order</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+      * {
+        margin: 0;
+        font-family: 'Bricolage Grotesque', sans-serif;
+        font-weight: 500;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        background: #2a2a2a;
+        color: #fff;
+        display: flex;
+        user-select: none;
+      }
+      #main {
+        display: flex;
+        width: 100vw;
+        flex-direction: column;
+      }
+      .mainHeading,
+      .box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #444444;
+        border: 1.5px solid #eee;
+        padding: 12px;
+        height: 43px;
+        width: 100%;
+      }
+      #addProductBtn {
+        width: 10%;
+      }
+      .signs {
+        background-color: #444444;
+        border: 0.5px solid #eee;
+        height: 100%;
+        cursor: pointer;
+        padding: 18px 20px;
+        border-radius: 7px;
+        font-size: 2.2rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 300;
+      }
+      .orderQuantityBox {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .mainTables {
+        display: flex;
+      }
+      #addProductMenu {
+        display: flex;
+        flex-direction: column;
+      }
+      #addProductMenu .addProduct {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 23px;
+        padding: 10px;
+      }
+      .addProduct > span {
+        padding: 0 53px;
+        cursor: pointer;
+      }
+      .addProduct > input {
+        padding: 10px;
+        font-size: 1.1rem;
+        width: 100%;
+
+        height: 7vh;
+      }
+      #error {
+        text-align: center;
+        font-size: 1.5rem;
+        color: rgb(183, 0, 0);
+        -webkit-text-stroke: 0.5px black;
+        margin-bottom: 5px;
+      }
+      .mainTables > div {
+        width: 100%;
+      }
+      #makeOrder {
+        cursor: pointer;
+      }
+      .editQuantity {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #00bfff;
+      }
+      @media only screen and (max-width: 720px) {
+        body {
+          background-color: lightblue;
+        }
+        body * {
+          font-size: 0.9rem;
+          text-align: center;
+        }
+        .addProduct {
+          flex-direction: column;
+        }
+        .addProduct * {
+          text-align: center;
+        }
+        .addProductHeading {
+          width: 100%;
+          margin: 0;
+        }
+        #makeOrder,
+        #addProductBtn {
+          width: fit-content;
+          padding: 23px;
+          border-radius: 7px;
+        }
+        #addProductBtn {
+          padding: 0 28px;
+        }
+        .signs {
+          padding: 12px 10px;
+          font-size: 0.9rem;
+        }
+        .orderQunatityPieces {
+          margin: 0.5rem;
+        }
+        #secondTable .mainHeading {
+          /* background-color: #007bff; Different background color for this specific heading */
+          text-align: center; /* Center the text */
+          border-radius: 5px; /* Optional rounded corners */
+          font-size: 0.6rem;
+        }
+        .mainHeading {
+          background-color: #000e47;
+          border-radius: 5px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div id="addProductMenu">
+        <div class="box addProductHeading">Add Product</div>
+        <div class="addProduct">
+          <input
+            type="text"
+            id="productName"
+            placeholder="Enter Product Name"
+          />
+          <input
+            type="text"
+            id="productQuantity"
+            placeholder="Enter Quantity (Only In Pieces)"
+          />
+          <input
+            type="text"
+            id="shopKeeperName"
+            placeholder="Enter Shopkeeper Name"
+          />
+          <span class="box" id="addProductBtn">Add</span>
+          <div class="box" id="makeOrder">Make Order</div>
+        </div>
+        <div id="error">&ensp;</div>
+      </div>
+      <div class="mainTables">
+        <div id="firstTable">
+          <div class="mainHeading">Product Name</div>
+          <div id="productMenu" class="productMenu"></div>
+        </div>
+        <div id="secondTable">
+          <div class="mainHeading">Available Quantity (In Pieces)</div>
+          <div id="availableMenu" class="availableMenu"></div>
+        </div>
+        <div id="thirdTable">
+          <div class="mainHeading">Order Quantity</div>
+          <div id="orderQuantity" class="orderQuantity"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function getCurrentTime() {
+        const now = new Date()
+
+        // Get hours, minutes, and date components
+        const hours = now.getHours()
+        const minutes = now.getMinutes()
+        const day = now.getDate()
+        const month = now.getMonth() + 1 // Months are zero-based
+        const year = now.getFullYear()
+
+        // Format hours to 12-hour format and determine AM/PM
+        const ampm = hours >= 12 ? 'pm' : 'am'
+        const formattedHours = hours % 12 || 12 // Convert to 12-hour format
+        const formattedMinutes = String(minutes).padStart(2, '0') // Ensure two digits
+
+        // Construct the formatted time string
+        return `${formattedHours}:${formattedMinutes}${ampm} ${day}/${String(
+          month
+        ).padStart(2, '0')}/${year}`
+      }
+
+      const products = JSON.parse(localStorage.getItem('products')) || []
+
+      document
+        .getElementById('addProductBtn')
+        .addEventListener('click', addProduct)
+      document.getElementById('makeOrder').addEventListener('click', () => {
+        if (shopKeeperName.value.trim().length > 0) {
+          console.log('hid')
+          makeOrder()
+        } else {
+          console.log('hi')
+        }
+      })
+
+      // Initialize the page with saved products
+      window.onload = () => {
+        products.forEach(product =>
+          addProductToTable(product.name, product.quantity, product.order)
+        )
+      }
+
+      function addProduct() {
+        const productName = document.getElementById('productName').value.trim()
+        const productQuantity = document.getElementById('productQuantity').value
+
+        if (!productName) {
+          showError('Please enter a valid product name')
+          return
+        }
+
+        if (isNaN(Number(productQuantity))) {
+          showError('Please enter a valid product quantity')
+          return
+        }
+
+        showSuccess('Added Successfully')
+        const newProduct = {
+          name: productName,
+          quantity: Number(productQuantity),
+          order: 0
+        }
+        products.push(newProduct)
+        localStorage.setItem('products', JSON.stringify(products))
+        addProductToTable(
+          newProduct.name,
+          newProduct.quantity,
+          newProduct.order
+        )
+        resetInputs()
+      }
+
+      function addProductToTable(name, quantity, order) {
+        const productMenu = document.getElementById('productMenu')
+        const availableMenu = document.getElementById('availableMenu')
+        const orderQuantityMenu = document.getElementById('orderQuantity')
+        const index = productMenu.childElementCount + 1
+
+        addRow(productMenu, 'box', name, index)
+        addRow(availableMenu, 'box pieces', quantity, index)
+        addOrderQuantityRow(orderQuantityMenu, order, index)
+      }
+
+      function addRow(parent, className, content, index) {
+        const div = document.createElement('div')
+        div.className = className
+        div.dataset.index = index
+        div.innerText = content
+        parent.appendChild(div)
+      }
+
+      function addOrderQuantityRow(parent, order, index) {
+        const row = document.createElement('div')
+        row.classList.add('box', 'orderQuantityBox')
+
+        const minusBtn = createButton('—', index)
+        const quantityDiv = createDiv('orderQunatityPieces', order, index)
+        const plusBtn = createButton('+', index)
+        const editBtn = createEditButton(index)
+
+        row.append(minusBtn, quantityDiv, plusBtn, editBtn)
+        parent.appendChild(row)
+      }
+
+      function createButton(content, index) {
+        const btn = document.createElement('div')
+        btn.classList.add('signs')
+        btn.dataset.index = index
+        btn.innerText = content
+        btn.addEventListener('click', handleQuantityChange)
+        return btn
+      }
+
+      function createDiv(className, content, index) {
+        const div = document.createElement('div')
+        div.className = className
+        div.dataset.index = index
+        div.innerText = content
+        return div
+      }
+
+      function createEditButton(index) {
+        const btn = document.createElement('div')
+        btn.className = 'editQuantity'
+        btn.innerText = 'Edit'
+        btn.dataset.index = index
+        btn.addEventListener('click', () => openEditDialog(index))
+        return btn
+      }
+
+      function openEditDialog(index) {
+        const newQuantity = prompt('Enter new quantity (0 or greater):')
+        if (newQuantity === null) return // Cancelled
+        const parsedQuantity = Number(newQuantity)
+        if (!isNaN(parsedQuantity) && parsedQuantity >= 0) {
+          const availablePieces = document.querySelector(
+            `.pieces[data-index="${index}"]`
+          )
+          availablePieces.innerText = parsedQuantity
+
+          // Update the product in localStorage
+          products[index - 1].quantity = parsedQuantity // Adjust for 0-based index
+          localStorage.setItem('products', JSON.stringify(products))
+        } else {
+          showError('Please enter a valid quantity (0 or greater).')
+        }
+      }
+
+      function handleQuantityChange(event) {
+        const index = event.target.dataset.index - 1 // Adjust for 0-based index
+        const operator = event.target.innerText
+        const availablePieces = document.querySelector(
+          `.pieces[data-index="${index + 1}"]`
+        )
+        const orderPieces = document.querySelector(
+          `.orderQunatityPieces[data-index="${index + 1}"]`
+        )
+
+        let available = Number(availablePieces.innerText)
+        let order = Number(orderPieces.innerText)
+
+        if (operator === '—' && order > 0) {
+          available += 1
+          order -= 1
+        } else if (operator === '+' && available > 0) {
+          available -= 1
+          order += 1
+        }
+
+        availablePieces.innerText = available
+        orderPieces.innerText = order
+
+        // Update the product in localStorage
+        products[index].quantity = available
+        products[index].order = order
+        localStorage.setItem('products', JSON.stringify(products))
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById('error')
+        errorDiv.innerText = message
+        setTimeout(() => {
+          errorDiv.innerText = ''
+        }, 3000)
+      }
+
+      function showSuccess(message) {
+        const errorDiv = document.getElementById('error')
+        errorDiv.innerText = message
+        setTimeout(() => {
+          errorDiv.innerText = ''
+        }, 3000)
+      }
+
+      function resetInputs() {
+        document.getElementById('productName').value = ''
+        document.getElementById('productQuantity').value = ''
+      }
+
+      function makeOrder() {
+        const orderList = products
+          .filter(product => product.order > 0) // Filter products with order quantity > 0
+          .map(product => `${product.name} = ${product.order}pce`) // Format output
+          .join(', ') // Join all ordered products into a single string
+
+        if (orderList.length > 0) {
+          console.log(`Order: ${orderList}`)
+          window.open(
+            `https://wa.me/923009635061?text=${getCurrentTime()} %0A${encodeURIComponent(
+              shopKeeperName.value
+            )} Electic Store %0A${encodeURIComponent(orderList)}`,
+            '_blank'
+          )
+          //   window.open(
+          //     `https://wa.me/923009635061?text=${shopKeeperName.value}\n${orderList}`,
+          //     '_blank'
+          //   )
+
+          // Reset all order quantities to zero
+          products.forEach(product => {
+            product.order = 0 // Set order quantity to 0
+          })
+
+          // Update localStorage to reflect the change
+          localStorage.setItem('products', JSON.stringify(products))
+
+          // Reset the displayed order quantities in the UI
+          document
+            .querySelectorAll('.orderQunatityPieces')
+            .forEach(orderDiv => {
+              orderDiv.innerText = 0 // Set the displayed order quantity to 0
+            })
+        } else {
+          console.log('No products ordered')
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,224 @@
+:root {
+  --main-color: #224444; /* Deep teal */
+  --main-color-2: #fff; /* White */
+  --secondary-color: #4caf50; /* Fresh green for accents */
+  --accent-color: #ffeb3b; /* Lemon yellow */
+  --border-color: #556e6e; /* Slightly lighter teal */
+  --hover-bg: #357a7a; /* Slightly darker teal for hover */
+  --active-color: #102525; /* Bright orange for active */
+}
+
+.catagoriesParent {
+  width: 100%;
+}
+
+.catagoriesParent .catagories {
+  background-color: var(--main-color);
+  width: 100% !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  pointer-events: none;
+}
+
+.catagoriesParent > div > div {
+  pointer-events: all;
+  width: max-content;
+  padding: 20px 30px;
+  color: #fff;
+  font-size: 1.7rem;
+  border: 2px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease-in-out;
+  padding: 12px 24px;
+}
+
+.catagoriesParent > div > div:hover {
+  background-color: var(--hover-bg);
+  color: var(--main-color-2);
+  transform: scale(1.05) translateY(-5px);
+}
+
+.isActiveCategory {
+  background-color: var(--active-color);
+  color: var(--main-color-2);
+  transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+}
+
+.isActiveCategory:hover {
+  background-color: #011b1b; /* Darker orange for hover */
+  transform: scale(1.1);
+}
+
+.catagoriesHeading {
+  color: var(--main-color);
+  background-color: #1d3a3a;
+  color: #fff;
+  font-size: 2.4rem;
+  margin-bottom: 2px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.addCatagoriesWindow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  padding: 30px;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease-in-out;
+}
+.addCatagoriesWindow:hover {
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+}
+
+.addCatagoriesWindow > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.addCatagoriesWindow > input {
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 1.6rem;
+  outline: none;
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: border-color 0.3s ease-in-out;
+}
+
+.addCatagoriesWindow > input:focus {
+  border-color: var(--main-color);
+}
+
+.addCatagoriesWindow .catagoriesBtns > button {
+  padding: 14px 28px;
+  font-size: 1.7rem;
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.addCatagoriesWindow .catagoriesBtns > button:hover {
+  background-color: var(--hover-bg);
+  color: #fff;
+  transform: translateY(-3px) scale(1.05);
+}
+
+.addCatagoriesWindow .catagoriesBtns > button:active {
+  background-color: var(--main-color);
+  color: var(--main-color-2);
+  transform: translateY(2px) scale(0.95);
+}
+
+@media only screen and (max-width: 720px) {
+  .addCatagoriesWindow {
+    width: 90vw;
+    border-radius: 8px;
+  }
+  .addCatagoriesWindow .catagoriesBtns > button {
+    padding: 14px 28px;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: var(--secondary-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+  }
+  .addCatagoriesWindow > input {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 1rem;
+    outline: none;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease-in-out;
+  }
+  .categoriesChild {
+    font-size: 0.9rem !important;
+    border-radius: 5px !important;
+  }
+  .catagoriesHeading {
+    font-size: 1.35rem !important;
+    height: 5vh !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .makeShopOrder * {
+    font-size: 3.5vw !important;
+  }
+  #shopKeeperName {
+    padding: 0;
+    font-size: 0.9rem !important;
+  }
+  .addProductWithScreen h1 {
+    width: 100%;
+    font-size: 1.5rem;
+    top: 15%;
+    background-color: #009185;
+    color: rgb(255, 255, 255) !important;
+    font-weight: bolder;
+  }
+  .addProductWithScreen input {
+    margin: 4px;
+    border-radius: 4px;
+    font-size: 1.3rem !important;
+    width: 100%;
+    &::placeholder {
+      font-size: 1.3rem !important;
+    }
+  }
+  .WBtns span {
+    font-size: 1.3rem;
+    margin: 0 5px;
+    height: 3rem;
+    width: 7rem !important;
+  }
+  #secondTable .mainHeading {
+    text-align: center;
+    border-radius: 5px;
+    font-size: 0.8rem;
+    display: flex;
+    flex-direction: column;
+  }
+}
+#secondTable .mainHeading {
+  border-radius: 5px;
+}
+.categoriesChild {
+  border-radius: 5px !important;
+}
+
+.catagories {
+  padding: 10px;
+}

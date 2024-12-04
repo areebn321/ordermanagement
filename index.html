@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Order</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="hamburger.css" />
+    <link rel="stylesheet" href="catagories.css" />
+    <link rel="stylesheet" href="shopkeeperName.css" />
+    <link rel="stylesheet" href="password.css" />
+  </head>
+  <body>
+    <div id="passwordOverlay" class="nonee">
+      <div id="passwordWindow">
+        <h1>Enter Password</h1>
+        <input type="password" id="passwordInput" placeholder="Password" />
+        <button id="submitButton">Submit</button>
+      </div>
+    </div>
+
+    <div class="whatsAppNoParent none">
+      <h1>Enter Your WhatsApp Number</h1>
+
+      <input type="number" id="whatsAppNoInput" placeholder="Enter Here" />
+      <div class="whatsAppNoError"></div>
+      <button id="submitWhatsAppNo">Submit</button>
+    </div>
+    <div id="rsShow" class="none">
+      <p id="rsShowP"></p>
+      <button class="rsShow_btn">Cancel</button>
+    </div>
+    <div id="main">
+      <div class="hamburger_container">
+        <div class="hamburger_line hamburger_line1"></div>
+        <div class="hamburger_line hamburger_line2"></div>
+        <div class="hamburger_line hamburger_line3"></div>
+      </div>
+      <div class="notification" id="notification"></div>
+      <div id="addProductMenu">
+        <div class="box addProductHeading">Product Details</div>
+        <div id="hamBurgerWhenOpen" class="hidden">
+          <div class="icontent">
+            <h1 class="anyOption">Choose Any Option</h1>
+            <button>
+              <a href="./ledger.html" style="color: #000; text-decoration: none"
+                >Check Ledger</a
+              >
+            </button>
+            <button id="addProductBtnHam">Add Product</button>
+            <button id="showBalance">Show Balance</button>
+            <button id="changeWhatsAppNo">Change WhatsApp Number</button>
+            <button id="backup">Copy Data</button>
+            <button id="backupRestore">Restore Backup</button>
+            <button id="addCatagories">Add Catagories</button>
+            <button id="editCatagories">Edit Categories Name</button>
+            <button id="clearLS">Reset Full App</button>
+          </div>
+        </div>
+        <div class="makeShopOrder">
+          <div class="shopKeeperNameParent">
+            <input
+              type="text"
+              id="shopKeeperName"
+              class=""
+              placeholder="Enter Shopkeeper Name"
+              autocomplete="off"
+            />
+            <input
+              type="text"
+              id="shopKeeperCity"
+              class=""
+              placeholder="Enter City"
+              autocomplete="off"
+            />
+          </div>
+          <div class="box" id="makeOrder">Make Order</div>
+        </div>
+        <div class="catagoriesParent">
+          <main class="catagoriesHeading">Select Categories Below</main>
+          <!-- <h1>Hi</h1> -->
+          <div class="catagories"></div>
+        </div>
+        <div class="addCatagoriesWindow hidden">
+          <input
+            type="text"
+            id="catagoriesInput"
+            placeholder="Enter Catagories Name"
+            autocomplete="off"
+          />
+          <div class="catagoriesBtns">
+            <button id="addCatagoriesBtn">Add</button>
+            <button id="cancelCatagoriesBtn">Cancel</button>
+          </div>
+        </div>
+        <div class="addProduct addProductWithScreen hidden">
+          <h1>Enter Product Data</h1>
+          <div id="error">&ensp;</div>
+
+          <input
+            type="text"
+            id="productName"
+            placeholder="Enter Product Name"
+            autocomplete="off"
+          />
+          <input
+            type="number"
+            id="productQuantity"
+            placeholder="Enter Quantity (Only In Pieces)"
+            autocomplete="off"
+            class="no-arrows"
+          />
+          <input
+            type="number"
+            id="productPrice"
+            placeholder="Enter Product Price"
+            class="no-arrows"
+            autocomplete="off"
+          />
+          <div class="WBtns">
+            <span class="box" id="addProductBtn">Add</span>
+            <span class="box" id="cancelProductBtn">Cancel</span>
+          </div>
+        </div>
+
+        <div id="error2" class="">&ensp;</div>
+      </div>
+      <div class="mainTables">
+        <div id="firstTable">
+          <div class="mainHeading">Product Name</div>
+          <div id="productMenu" class="productMenu"></div>
+        </div>
+        <div id="secondTable">
+          <div class="mainHeading">
+            Available Quantity <span id="inPieces"> (In Pieces)</span>
+          </div>
+          <div id="availableMenu" class="availableMenu"></div>
+        </div>
+        <div id="thirdTable">
+          <div class="mainHeading">Order Quantity</div>
+          <div id="orderQuantity" class="orderQuantity"></div>
+        </div>
+        <div id="forthTable">
+          <div class="mainHeading">Product Price</div>
+          <div id="prodPrice" class="prodPrice"></div>
+        </div>
+      </div>
+    </div>
+    <script src="/script.js"></script>
+    <script src="/showMessages.js"></script>
+    <script src="/hamburger.js"></script>
+    <script src="/hamOptions.js"></script>
+    <script src="/backupCopyAndRestore.js"></script>
+    <script src="/catagories.js"></script>
+    <script src="/shopkeepName.js"></script>
+    <script src="/editCategoriy.js"></script>
+    <script src="/password.js"></script>
+  </body>
+</html>

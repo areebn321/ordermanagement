@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Order</title>
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon" />
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
+      * {
+        margin: 0;
+        font-family: 'Bricolage Grotesque', sans-serif;
+        font-weight: 500;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        height: 100vh;
+        width: 100vw;
+        background: #2a2a2a;
+        color: #fff;
+        display: flex;
+        user-select: none;
+        position: relative;
+      }
+      #main {
+        display: flex;
+        width: 100vw;
+        flex-direction: column;
+      }
+      .mainHeading,
+      .box {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #444444;
+        border: 1.5px solid #eee;
+        padding: 12px;
+        height: 43px;
+        width: 100%;
+      }
+      #addProductBtn {
+        width: 10%;
+      }
+      .signs {
+        background-color: #444444;
+        border: 0.5px solid #eee;
+        height: 100%;
+        cursor: pointer;
+        padding: 18px 20px;
+        border-radius: 7px;
+        font-size: 2.2rem;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 300;
+      }
+      .orderQuantityBox {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .mainTables {
+        display: flex;
+        gap: 0;
+        align-items: center;
+        justify-content: center;
+      }
+      #addProductMenu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #addProductMenu .addProduct {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 23px;
+        padding: 10px;
+        width: 85%;
+      }
+      .addProduct > span {
+        padding: 0 53px;
+        cursor: pointer;
+      }
+      .addProduct > input {
+        padding: 10px;
+        font-size: 1rem;
+        width: 100%;
+        height: 7vh;
+      }
+      #error {
+        text-align: center;
+        font-size: 1.5rem;
+        color: rgb(183, 0, 0);
+        -webkit-text-stroke: 0.5px black;
+        margin-bottom: 5px;
+      }
+
+      #makeOrder {
+        cursor: pointer;
+      }
+      .editQuantity {
+        margin-left: 10px;
+        cursor: pointer;
+        color: #00bfff;
+      }
+      .mainTables * .box {
+        border-radius: 3px;
+        padding: 25px 4px;
+      }
+      .signs {
+        font-size: 0.9rem;
+        padding: 12px 8px;
+      }
+      @media only screen and (max-width: 720px) {
+        body {
+          padding: 10px;
+        }
+        body * {
+          font-size: 0.9rem;
+          text-align: center;
+        }
+        .addProduct {
+          flex-direction: column;
+        }
+        .addProduct * {
+          text-align: center;
+        }
+        .addProductHeading {
+          width: 90%;
+          margin: 0;
+          border-radius: 3px;
+        }
+        #makeOrder,
+        #addProductBtn {
+          width: fit-content;
+          padding: 23px;
+          border-radius: 7px;
+        }
+        #addProductBtn {
+          padding: 0 28px;
+        }
+        .signs {
+          font-size: 0.9rem;
+          padding: 12px 8px;
+        }
+        .orderQunatityPieces {
+          margin: 0.5rem;
+        }
+        #secondTable .mainHeading {
+          text-align: center;
+          border-radius: 5px;
+          font-size: 0.6rem;
+          display: flex;
+          flex-direction: column;
+        }
+        input {
+          border-radius: 5px;
+        }
+        .mainHeading {
+          background-color: #000e47;
+          border-radius: 5px;
+          padding: 25px 7px;
+          font-weight: 700;
+          font-size: 1rem;
+        }
+        .editQuantity {
+          margin-right: 3px;
+        }
+        #firstTable .mainHeading {
+          width: 100% !important;
+        }
+
+        #firstTable {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        #thirdTable {
+          width: 50% !important;
+          max-width: 50% !important;
+        }
+        #secondTable {
+          width: 50% !important;
+          max-width: 50% !important;
+        }
+        #inPieces {
+          font-size: 0.5rem;
+        }
+      }
+      .addProductHeading {
+        position: relative;
+      }
+      #backup {
+        position: absolute;
+        /* top: 3%; */
+        right: 4%;
+        opacity: 0.1%;
+        transition: all 0.5s;
+        cursor: pointer;
+        &:hover {
+          opacity: 1;
+        }
+        #productQuantity::placeholder {
+          font-size: 0.8rem;
+          font-size: 4vw;
+          word-spacing: -1px;
+          text-align: center;
+        }
+      }
+      #productQuantity::placeholder {
+        font-size: 0.8rem;
+        text-align: center;
+      }
+      #backupRestore {
+        position: absolute;
+        /* top: 3%; */
+        left: 4%;
+        opacity: 0.1%;
+        transition: all 0.5s;
+        cursor: pointer;
+        &:hover {
+          opacity: 1;
+        }
+        .productMenu .box,
+        .availableMenu .box,
+        .orderQuantity .box {
+          min-height: 80px;
+        }
+      }
+      .flex-centre {
+        align-items: center;
+        justify-content: center;
+      }
+      .notification {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #1f1f1f;
+        color: white;
+        padding: 10px 15px;
+        border: 1px solid #eee;
+        border-radius: 5px;
+        display: none;
+        z-index: 1000;
+        transition: all 0.5s;
+      }
+      #firstTable,
+      #secondTable,
+      #thirdTable {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div class="notification" id="notification"></div>
+      <div id="addProductMenu">
+        <div class="box addProductHeading">
+          Add Product
+          <div id="backup">Copy Data</div>
+          <div id="backupRestore">Backup Restore</div>
+        </div>
+
+        <div class="addProduct">
+          <input
+            type="text"
+            id="productName"
+            placeholder="Enter Product Name"
+            autocomplete="off"
+          />
+          <input
+            type="number"
+            id="productQuantity"
+            placeholder="Enter Quantity (Only In Pieces)"
+            autocomplete="off"
+          />
+          <input
+            type="text"
+            id="shopKeeperName"
+            placeholder="Enter Shopkeeper Name"
+          />
+          <span class="box" id="addProductBtn">Add</span>
+          <div class="box" id="makeOrder">Make Order</div>
+        </div>
+        <div id="error">&ensp;</div>
+      </div>
+      <div class="mainTables">
+        <div id="firstTable">
+          <div class="mainHeading">Product Name</div>
+          <div id="productMenu" class="productMenu"></div>
+        </div>
+        <div id="secondTable">
+          <div class="mainHeading">
+            Available Quantity <span id="inPieces"> (In Pieces)</span>
+          </div>
+          <div id="availableMenu" class="availableMenu"></div>
+        </div>
+        <div id="thirdTable">
+          <div class="mainHeading">Order Quantity</div>
+          <div id="orderQuantity" class="orderQuantity"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      function showNotification(a) {
+        const notification = document.getElementById('notification')
+        notification.style.display = 'block' // Show the notification
+        notification.style.opacity = '1' // Make it fully visible
+        notification.innerHTML = a // Make it fully visible
+
+        // Hide the notification after 2 seconds
+        setTimeout(() => {
+          notification.style.opacity = '0' // Fade out
+          setTimeout(() => {
+            notification.style.display = 'none' // Hide it completely
+          }, 500) // Wait for the fade out transition
+        }, 2000)
+      }
+
+      function getCurrentTime() {
+        const now = new Date()
+        const hours = now.getHours()
+        const minutes = now.getMinutes()
+        const day = now.getDate()
+        const month = now.getMonth() + 1
+        const year = now.getFullYear()
+        const ampm = hours >= 12 ? 'pm' : 'am'
+        const formattedHours = hours % 12 || 12
+        const formattedMinutes = String(minutes).padStart(2, '0')
+        return `${formattedHours}:${formattedMinutes}${ampm} ${day}/${String(
+          month
+        ).padStart(2, '0')}/${year}`
+      }
+
+      const products = JSON.parse(localStorage.getItem('products')) || []
+
+      document
+        .getElementById('addProductBtn')
+        .addEventListener('click', addProduct)
+      document.getElementById('makeOrder').addEventListener('click', () => {
+        if (shopKeeperName.value.trim().length > 0) {
+          makeOrder()
+          shopKeeperName.value = ''
+        } else {
+          showError('Please enter a shopkeeper name')
+          setTimeout(() => {
+            showError('&ensp;')
+          }, 1000)
+        }
+      })
+
+      window.onload = () => {
+        renderTables()
+      }
+
+      function addProduct() {
+        const productName = document.getElementById('productName').value.trim()
+        const productQuantity = document.getElementById('productQuantity').value
+
+        if (!productName) {
+          showError('Please enter a valid product name')
+          return
+        }
+
+        if (isNaN(Number(productQuantity))) {
+          showError('Please enter a valid product quantity')
+          return
+        }
+
+        showSuccess('Added Successfully')
+        setTimeout(() => {
+          showSuccess('&ensp;')
+        }, 1000)
+        const newProduct = {
+          name: productName,
+          quantity: Number(productQuantity),
+          order: 0
+        }
+        products.push(newProduct)
+        localStorage.setItem('products', JSON.stringify(products))
+        renderTables()
+        resetInputs()
+      }
+
+      function renderTables() {
+        const productMenu = document.getElementById('productMenu')
+        const availableMenu = document.getElementById('availableMenu')
+        const orderQuantityMenu = document.getElementById('orderQuantity')
+
+        productMenu.innerHTML = ''
+        availableMenu.innerHTML = ''
+        orderQuantityMenu.innerHTML = ''
+
+        products.forEach((product, index) => {
+          addProductToTable(
+            product.name,
+            product.quantity,
+            product.order,
+            index + 1
+          )
+        })
+      }
+
+      function addProductToTable(name, quantity, order, index) {
+        const productMenu = document.getElementById('productMenu')
+        const availableMenu = document.getElementById('availableMenu')
+        const orderQuantityMenu = document.getElementById('orderQuantity')
+
+        addRow(productMenu, 'box', name, index)
+        addRow(availableMenu, 'box pieces', quantity, index)
+
+        addOrderQuantityRow(orderQuantityMenu, order, index)
+      }
+
+      function addRow(parent, className, content, index) {
+        const div = document.createElement('div')
+        div.className = className
+        div.dataset.index = index
+        div.innerText = content
+        parent.appendChild(div)
+      }
+
+      function addOrderQuantityRow(parent, order, index) {
+        const row = document.createElement('div')
+        row.classList.add('box', 'orderQuantityBox')
+
+        const minusBtn = createButton('—', index)
+        const quantityDiv = createDiv('orderQunatityPieces', order, index)
+        const plusBtn = createButton('+', index)
+
+        const actionContainer = document.createElement('div')
+        actionContainer.style.display = 'flex'
+        actionContainer.style.flexDirection = 'column'
+        actionContainer.classList.add('flex-centre')
+        const editBtn = createEditButton(index)
+        const deleteBtn = createDeleteButton(index)
+
+        actionContainer.append(editBtn, deleteBtn)
+        row.append(minusBtn, quantityDiv, plusBtn, actionContainer)
+        parent.appendChild(row)
+      }
+
+      function createButton(sign, index) {
+        const btn = document.createElement('div')
+        btn.className = 'signs'
+        btn.innerText = sign
+        btn.dataset.index = index
+
+        btn.addEventListener('click', () => {
+          const quantityDiv = document.querySelector(
+            `.orderQunatityPieces[data-index='${index}']`
+          )
+          const availableDiv = document.querySelector(
+            `.pieces[data-index='${index}']`
+          )
+
+          let orderQuantity = Number(quantityDiv.innerText)
+          let availableQuantity = Number(availableDiv.innerText)
+
+          if (sign === '—' && orderQuantity > 0) {
+            orderQuantity--
+            availableQuantity++
+          } else if (sign === '+' && availableQuantity > 0) {
+            orderQuantity++
+            availableQuantity--
+          }
+
+          quantityDiv.innerText = orderQuantity
+          availableDiv.innerText = availableQuantity
+          products[index - 1].order = orderQuantity
+          products[index - 1].quantity = availableQuantity
+
+          // Save to localStorage
+          localStorage.setItem('products', JSON.stringify(products))
+        })
+
+        return btn
+      }
+
+      function createDiv(className, content, index) {
+        const div = document.createElement('div')
+        div.className = className
+        div.dataset.index = index
+        div.innerText = content
+        return div
+      }
+
+      function createEditButton(index) {
+        const btn = document.createElement('div')
+        btn.className = 'editQuantity'
+        btn.innerText = 'Edit'
+        btn.dataset.index = index
+
+        btn.addEventListener('click', () => {
+          const availableDiv = document.querySelector(
+            `.pieces[data-index='${index}']`
+          )
+          const currentAvailableQuantity = Number(availableDiv.innerText)
+          const userInput = prompt(
+            'Enter a positive or negative number to adjust the available quantity:'
+          )
+          const changeInQuantity = Number(userInput)
+          if (isNaN(changeInQuantity)) {
+            showError('Please enter a valid number.')
+            return
+          }
+          const newAvailableQuantity =
+            currentAvailableQuantity + changeInQuantity
+
+          if (newAvailableQuantity >= 0) {
+            availableDiv.innerText = newAvailableQuantity
+            products[index - 1].quantity = newAvailableQuantity
+            localStorage.setItem('products', JSON.stringify(products))
+            showSuccess('Quantity updated successfully!')
+            setTimeout(() => {
+              showSuccess('&ensp;')
+            }, 1000)
+            // Re-render the table
+            renderTables()
+          } else {
+            showError('Available quantity cannot be negative.')
+          }
+        })
+
+        return btn
+      }
+
+      function createDeleteButton(index) {
+        const btn = document.createElement('div')
+        btn.className = 'editQuantity'
+        btn.innerText = 'Delete'
+        btn.style.color = '#ff4500' // Style the delete button to make it stand out
+        btn.dataset.index = index
+
+        // Add confirmation before deleting
+        btn.addEventListener('click', () => {
+          const confirmDelete = confirm(
+            'Are you sure you want to delete this product?'
+          )
+          if (confirmDelete) {
+            const confirmAgain = confirm('Please confirm again to delete.')
+            if (confirmAgain) {
+              deleteProduct(index) // Call the function to delete the product
+            }
+          }
+        })
+        return btn
+      }
+
+      function deleteProduct(index) {
+        // Remove product from local storage and update DOM
+        products.splice(index - 1, 1) // Remove the product from the array
+        localStorage.setItem('products', JSON.stringify(products))
+
+        // Re-render the tables to reflect changes
+        renderTables()
+      }
+
+      function showError(message) {
+        const errorDiv = document.getElementById('error')
+        errorDiv.innerHTML = message
+        errorDiv.style.color = 'rgb(183, 0, 0)'
+      }
+
+      function showSuccess(message) {
+        const errorDiv = document.getElementById('error')
+        errorDiv.innerHTML = message
+        errorDiv.style.color = '#fff'
+      }
+
+      function resetInputs() {
+        document.getElementById('productName').value = ''
+        document.getElementById('productQuantity').value = ''
+      }
+
+      function makeOrder() {
+        const order = products.filter(product => product.order > 0)
+        if (order.length === 0) {
+          showError('No orders to make.')
+          return
+        }
+
+        const currentTime = getCurrentTime()
+        const orderSummary = order
+          .map(product => `${product.name}: ${product.order} pieces`)
+          .join('\n')
+        const finalMessage = `${getCurrentTime()} \n${
+          shopKeeperName.value
+        } Electic Store \n${orderSummary}`
+        window.open(
+          `https://wa.me/923009635061?text=${encodeURIComponent(finalMessage)}`,
+          '_blank'
+        )
+        navigator.clipboard.writeText(finalMessage)
+
+        showNotification('Copied!')
+        // Reset order quantities to zero
+        products.forEach(product => {
+          product.order = 0
+        })
+
+        localStorage.setItem('products', JSON.stringify(products))
+        renderTables() // Re-render the table to reflect the changes
+        showSuccess('Order placed successfully!')
+        setTimeout(() => {
+          showSuccess('&ensp;')
+        }, 1000)
+      }
+      backup.addEventListener('click', e => {
+        navigator.clipboard.writeText(localStorage.getItem('products'))
+        showNotification('Copied!')
+      })
+      backupRestore.addEventListener('click', e => {
+        let confirmation = confirm('Are you sure you want to restore backup?')
+
+        if (confirmation === true) {
+          navigator.clipboard
+            .readText()
+            .then(function (text) {
+              try {
+                let copiedData = JSON.parse(text) // Validate if it's a valid JSON
+
+                // Check if the parsed data matches the expected structure
+                if (
+                  Array.isArray(copiedData) &&
+                  copiedData.every(
+                    item =>
+                      typeof item.name === 'string' &&
+                      typeof item.quantity === 'number' &&
+                      typeof item.order === 'number'
+                  )
+                ) {
+                  // If valid, store it in localStorage
+                  localStorage.setItem('products', JSON.stringify(copiedData))
+                  showNotification('Backup Restored')
+                  setTimeout(() => {
+                    window.location.reload() // Reload to apply the restored data
+                  }, 1000)
+                } else {
+                  throw new Error('Invalid product structure')
+                }
+              } catch (error) {
+                console.error('Error restoring backup: ', error)
+                showNotification('Failed to restore backup: Invalid data')
+              }
+            })
+            .catch(function (err) {
+              console.error('Failed to read clipboard contents: ', err)
+              showNotification('Failed to read clipboard contents')
+            })
+        }
+      })
+    </script>
+  </body>
+</html>
