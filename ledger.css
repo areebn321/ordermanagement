@@ -13,6 +13,13 @@ body {
   display: flex;
   /* align-items: center; */
   justify-content: center;
+  overflow-x: hidden;
+}
+.allLedgersPar {
+  display: flex;
+  align-items: center;
+  /* justify-content: center; */
+  flex-direction: column;
 }
 
 .container {
@@ -38,18 +45,21 @@ body {
   background-size: 14px 24px;
 }
 #allLedgersHeading {
-  margin-top: 15px;
+  margin-top: 55px;
   text-align: center;
-  font-size: 3rem;
+  font-size: 10vw;
 }
 .table-container {
   margin-top: 2rem;
   position: relative;
-  overflow-x: auto;
+  /* overflow-x: auto; */
+  width: 90vw;
 }
 
 .custom-table {
   width: 100%;
+
+  margin-bottom: 5rem;
   text-align: left;
   font-size: 0.875rem;
   color: #cbd5e1; /* Equivalent to text-slate-400 */
@@ -66,7 +76,7 @@ body {
 
 .custom-table th,
 .custom-table td {
-  padding: 0.75rem 1.5rem; /* Equivalent to px-6 py-3 */
+  padding: 0.75rem 0.8rem; /* Equivalent to px-6 py-3 */
   border: 1px solid #475569; /* Equivalent to border-slate-600 */
 }
 
@@ -94,4 +104,53 @@ body {
 
 .custom-table tbody tr.dark-mode:hover {
   background-color: #475569; /* Slightly lighter for hover effect in dark mode */
+}
+.home {
+  width: 150px;
+  height: 50px;
+  border: 1px solid #fff;
+  outline: none;
+  border-radius: 8px;
+  background-color: #0f172a;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #fff;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    background-color: #283452ec;
+    color: #fff;
+  }
+  &:active {
+    transform: scale(0.95);
+  }
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.homebtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+/*media queries for 750
+*/
+
+@media screen and (max-width: 750px) {
+  .home {
+    width: 70vw !important;
+    /* height: 35px; */
+  }
+  .table-container {
+    width: auto;
+  }
+  /* .allLedgersPar {
+    padding: 0 24px;
+  } */
 }

@@ -1,37 +1,53 @@
-function saveShopkeeperName() {
-  const shopkeeperNameInput = document.getElementById("shopKeeperName");
-  const enteredShopkeeperName = shopkeeperNameInput.value.trim();
+function createShopkeeperManager() {
+  const shopkeeperNamesList =
+    JSON.parse(localStorage.getItem("shopkeeperNamesList")) || [];
 
-  if (enteredShopkeeperName.length > 0) {
-    // Retrieve existing list of shopkeeper names from localStorage or initialize as an empty array
-    let shopkeeperNamesList = JSON.parse(
-      localStorage.getItem("shopkeeperNamesList")
-    );
-    if (!shopkeeperNamesList || !Array.isArray(shopkeeperNamesList)) {
-      shopkeeperNamesList = []; // Initialize array if data is missing or incorrect
-    }
+  function saveShopkeeperName() {
+    const shopkeeperNameInput = document.getElementById("shopKeeperName");
+    const enteredShopkeeperName = shopkeeperNameInput.value.trim();
 
-    // Check if the name already exists in the list to prevent duplicates
-    if (shopkeeperNamesList.includes(enteredShopkeeperName)) {
-      console.log("This shopkeeper name already exists.");
+    if (enteredShopkeeperName.length > 0) {
+      // Check if the name already exists in the list to prevent duplicates
+      if (
+        shopkeeperNamesList.some(
+          (shopkeeper) => shopkeeper.name === enteredShopkeeperName
+        )
+      ) {
+        console.log("This shopkeeper name already exists.");
+      } else {
+        // Add the new name with a default balance of "0"
+        shopkeeperNamesList.push({ name: enteredShopkeeperName, balance: "0" });
+        localStorage.setItem(
+          "shopkeeperNamesList",
+          JSON.stringify(shopkeeperNamesList)
+        );
+
+        shopkeeperNameInput.value = ""; // Clear the input field
+        displaySavedShopkeeperNames(); // Update the displayed list
+      }
     } else {
-      // Add the new name to the array and save the updated list to localStorage
-      shopkeeperNamesList.push(enteredShopkeeperName);
-      localStorage.setItem(
-        "shopkeeperNamesList",
-        JSON.stringify(shopkeeperNamesList)
-      );
-
-      // Clear the input field and update the displayed list of names
-      shopkeeperNameInput.value = "";
-      displaySavedShopkeeperNames();
+      alert("Please enter a shopkeeper name.");
     }
-  } else {
-    alert("Please enter a shopkeeper name.");
   }
+
+  function displaySavedShopkeeperNames() {
+    const shopkeeperListElement = document.getElementById("shopkeeperList");
+    shopkeeperListElement.innerHTML = ""; // Clear existing list
+    shopkeeperNamesList.forEach((shopkeeper) => {
+      const listItem = document.createElement("li");
+      listItem.textContent = shopkeeper.name; // Show only the name
+      shopkeeperListElement.appendChild(listItem);
+    });
+  }
+
+  return { saveShopkeeperName, displaySavedShopkeeperNames };
 }
 
-// Function to display all saved shopkeeper names beneath the input field as a dropdown
+const shopkeeperManager = createShopkeeperManager();
+
+/////////////////////////////////////
+
+// Function to display all saved shopkeeper details beneath the input field
 function displaySavedShopkeeperNames() {
   const shopkeeperNamesList =
     JSON.parse(localStorage.getItem("shopkeeperNamesList")) || [];
@@ -42,13 +58,13 @@ function displaySavedShopkeeperNames() {
   // Clear existing content in the display area
   savedNamesDisplayArea.innerHTML = "";
 
-  // Create and display each shopkeeper name as a clickable element with a delete cross
-  shopkeeperNamesList.forEach((name) => {
+  // Create and display each shopkeeper's details
+  shopkeeperNamesList.forEach((shopkeeper) => {
     const nameContainer = document.createElement("div");
     nameContainer.classList.add("shopkeeper-name-item-container");
 
     const nameElement = document.createElement("div");
-    nameElement.textContent = name;
+    nameElement.textContent = `${shopkeeper.name}`;
     nameElement.classList.add("shopkeeper-name-item");
 
     const deleteCross = document.createElement("span");
@@ -57,7 +73,7 @@ function displaySavedShopkeeperNames() {
 
     // Add click event to set the clicked name as the input's value
     nameElement.addEventListener("click", function () {
-      document.getElementById("shopKeeperName").value = name;
+      document.getElementById("shopKeeperName").value = shopkeeper.name;
       savedNamesDisplayArea.innerHTML = ""; // Hide the list after selection
     });
 
@@ -65,10 +81,10 @@ function displaySavedShopkeeperNames() {
     deleteCross.addEventListener("click", function (event) {
       event.stopPropagation(); // Prevent triggering the name selection event
       const confirmDelete = confirm(
-        `Are you sure you want to delete "${name}"?`
+        `Are you sure you want to delete "${shopkeeper.name}"?`
       );
       if (confirmDelete) {
-        deleteShopkeeperName(name); // Call delete function
+        deleteShopkeeperName(shopkeeper.name); // Call delete function
       }
     });
 
@@ -85,7 +101,7 @@ function deleteShopkeeperName(nameToDelete) {
 
   // Filter out the name to delete
   shopkeeperNamesList = shopkeeperNamesList.filter(
-    (name) => name !== nameToDelete
+    (shopkeeper) => shopkeeper.name !== nameToDelete
   );
 
   // Save the updated list back to localStorage
@@ -135,12 +151,12 @@ document.addEventListener("click", function (event) {
 // Initial display of shopkeeper names on page load
 displaySavedShopkeeperNames();
 
+// Add clear button functionality
 clearLS.addEventListener("click", function () {
-  // Clear the localStorage data and reload the page to ensure the dropdown is updated
-  confirm("Are you sure you want to clear all data?");
-  if (confirm) {
-    let a = prompt("Enter Key: ");
-    if (a == "omhx1hr4xgg") {
+  const confirmClear = confirm("Are you sure you want to clear all data?");
+  if (confirmClear) {
+    const key = prompt("Enter Key: ");
+    if (key === "omhx1hr4xgg") {
       localStorage.clear();
       location.reload();
     }

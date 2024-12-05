@@ -1,3 +1,18 @@
+let activeDukanDar;
+setTimeout(() => {
+  // let sss = document.querySelectorAll(".shopkeeper-name-item-container");
+  // console.log(sss);
+  // sss.forEach((e) => {
+  //   console.log(e);
+  //   e.addEventListener("click", (ee) => {
+  //     console.log(ee.target);
+  //   });
+  // });
+  let savedNamesDisplayArea = document.getElementById("savedNamesDisplayArea");
+  savedNamesDisplayArea.addEventListener("click", (e) => {
+    activeDukanDar = e.target.innerText;
+  });
+}, 2000);
 function showWhatsAppWindow() {
   let whatsAppNoParent = document.querySelector(".whatsAppNoParent");
   let whatsAppNoInput = document.querySelector("#whatsAppNoInput");
@@ -71,7 +86,7 @@ document.getElementById("makeOrder").addEventListener("click", () => {
   }
   if (shopKeeperName.value.trim().length > 0) {
     makeOrder();
-    saveShopkeeperName();
+    shopkeeperManager.saveShopkeeperName();
 
     shopKeeperName.value = "";
   } else {
@@ -419,6 +434,15 @@ function makeOrder() {
     discount = Number(discount);
   }
   let orderMessage;
+  console.log(activeDukanDar);
+
+  let orderDukan = JSON.parse(localStorage.getItem("shopkeeperNamesList")).find(
+    (item) => item.name === activeDukanDar
+  );
+  let ch = JSON.parse(localStorage.getItem("shopkeeperNamesList"));
+  let num = ch;
+  const DukanIndex = ch.findIndex((item) => item.name === activeDukanDar);
+
   if (Number(discount)) {
     totalAmountWithDiscount = totalAmount - (totalAmount * discount) / 100;
 
@@ -426,13 +450,30 @@ function makeOrder() {
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
 Bill: Rs: ${totalAmount}-${discount}%/-
-*Total Bill: Rs: ${totalAmountWithDiscount}/-*`;
+*Total Bill: Rs: ${totalAmountWithDiscount}/-*
+*Previous Balance: Rs: ${num[DukanIndex].balance}/-*
+*Grand Total: Rs: ${
+      parseInt(num[DukanIndex].balance) + totalAmountWithDiscount
+    }/-*
+`;
+    let prvBal = num[DukanIndex].balance;
+    num[DukanIndex].balance =
+      parseInt(prvBal) + parseInt(totalAmountWithDiscount);
+
+    localStorage.setItem("shopkeeperNamesList", JSON.stringify(num));
   } else {
     // Order message format including both shopkeeper name and a fixed store name
     orderMessage = `${date} at ${time}
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
-*Total Bill: Rs: ${totalAmount}/-*`;
+*Total Bill: Rs: ${totalAmount}/-*
+*Previous Balance: Rs: ${num[DukanIndex].balance}/-*
+*Grand Total: Rs: ${parseInt(num[DukanIndex].balance) + totalAmount}/-*
+`;
+    let prvBal = num[DukanIndex].balance;
+    num[DukanIndex].balance = parseInt(prvBal) + parseInt(totalAmount);
+
+    localStorage.setItem("shopkeeperNamesList", JSON.stringify(num));
   }
 
   // Show notification with order details and total amount

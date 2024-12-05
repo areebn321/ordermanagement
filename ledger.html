@@ -5,12 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shopkeeper Ledgers</title>
     <link rel="stylesheet" href="ledger.css" />
+    <link rel="stylesheet" href="hamLedger.css" />
   </head>
   <body>
+    <div class="hamburger" onclick="toggleHam(this)">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    <div class="btnsWindow toggleMenuCss">
+      <div class="homebtn">
+        <h1>Menu</h1>
+        <button class="home"><a href="index.html">Go Back Home</a></button>
+        <button class="home" id="editLedger">Edit Ledger</button>
+        <button class="home" id="showBal">See Shopkeeper Balance</button>
+      </div>
+    </div>
     <div class="container">
       <div class="grid-overlay"></div>
     </div>
-    <div>
+    <div class="allLedgersPar">
       <h1 id="allLedgersHeading">All Shopkeeper Ledgers</h1>
       <div class="table-container">
         <table class="custom-table">
@@ -18,18 +32,21 @@
             <tr>
               <th>Shopkeeper Name</th>
               <th>Total Balance</th>
+              <th>Action</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
+          <tbody id="table_body">
+            <!-- <tr>
               <td>Hafiz</td>
               <td>$2999</td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
     </div>
 
     <script src="./ledger.js"></script>
+    <script src="./editLedger.js"></script>
+    <script src="./hamLedger.js"></script>
   </body>
 </html>
