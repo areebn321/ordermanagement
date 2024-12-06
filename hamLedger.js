@@ -1,5 +1,7 @@
 function toggleHam(element) {
   element.classList.toggle("active");
+  // let hamburger = document.querySelector(".hamburger");
+  // hamburger.classList.toggle("active");
   toggleMenu();
 }
 function toggleMenu() {

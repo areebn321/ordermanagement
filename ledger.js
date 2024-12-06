@@ -98,6 +98,8 @@ showBal.addEventListener("click", (e) => {
   JSON.parse(localStorage.getItem("shopkeeperNamesList")).forEach((e) => {
     totalBalance += parseInt(e.balance);
   });
+  let hamburger = document.querySelector(".hamburger");
+  hamburger.classList.toggle("active");
   toggleMenu();
   alert(`Total Balance: Rs: ${totalBalance}/-`);
 });

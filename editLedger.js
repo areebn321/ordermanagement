@@ -1,6 +1,9 @@
 editLedger.addEventListener("click", (e) => {
+  toggleMenu();
+  let hamburger = document.querySelector(".hamburger");
+  hamburger.classList.toggle("active");
   let fprom = prompt("Enter Shopkeeper Number (For Change Balance): ");
-  fprom.placeholder = "Enter Shopkeeper Number (For Change Balance): ";
+
   if (typeof parseInt(fprom) == "number") {
     let pprice = prompt("Enter Balance");
 
