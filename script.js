@@ -86,6 +86,9 @@ document.getElementById("makeOrder").addEventListener("click", () => {
   }
   if (shopKeeperName.value.trim().length > 0) {
     makeOrder();
+    makeOrderr.innerHTML = "Nothing to order";
+    makeOrderr.disabled = true;
+
     shopkeeperManager.saveShopkeeperName();
 
     shopKeeperName.value = "";
