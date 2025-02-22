@@ -17,10 +17,16 @@ function getFormattedDateTime() {
 function renderTable() {
   const shopkeeperNamesList =
     JSON.parse(localStorage.getItem("shopkeeperNamesList")) || [];
+  const searchBar = document.querySelector("#searchBar");
+  const searchQuery = searchBar ? searchBar.value.toLowerCase() : "";
   const tableBody = document.querySelector("#table_body");
   tableBody.innerHTML = ""; // Clear existing rows
 
   shopkeeperNamesList.forEach((shopkeeper, index) => {
+    // Filter rows if a search query exists
+    if (searchQuery && !shopkeeper.name.toLowerCase().includes(searchQuery))
+      return;
+
     const tr = document.createElement("tr");
     tr.setAttribute("data-index", index);
 
@@ -29,6 +35,17 @@ function renderTable() {
 
     const tdBalance = document.createElement("td");
     tdBalance.textContent = shopkeeper.balance;
+    tdBalance.style.textAlign = "center"; // center the rate along with the button
+    // Append edit button after the balance
+    const btnEdit = document.createElement("button");
+    btnEdit.textContent = "Edit";
+    btnEdit.classList.add("edit-btn");
+    // Removed margin-left and center the button
+    btnEdit.style.display = "block";
+    btnEdit.style.margin = "5px auto";
+    btnEdit.setAttribute("data-index", index);
+    btnEdit.addEventListener("click", () => handleEdit(index));
+    tdBalance.appendChild(btnEdit);
 
     const btnReceived = document.createElement("button");
     btnReceived.textContent = "Received";
@@ -54,23 +71,19 @@ function handleReceived(index) {
   const receivedAmount = prompt(
     `Enter amount you received from ${shopkeeper.name}:`
   );
-
   if (!isNaN(receivedAmount) && receivedAmount.trim() !== "") {
     const amount = parseInt(receivedAmount);
-
     if (amount > 0) {
-      shopkeeperNamesList[index].balance = Math.max(
-        0,
-        parseInt(shopkeeper.balance) - amount
-      );
-      //write a code which send these datailed message to whats app num 923009635061
+      // Remove Math.max to allow negative balances
+      const oldBalance = parseInt(shopkeeper.balance);
+      const newBalance = oldBalance - amount;
+      shopkeeperNamesList[index].balance = newBalance;
+
       let whatsAppMessage = `Received At: ${getFormattedDateTime()}
-Received From *${shopkeeper.name}*
+Received From *${shopkeeper.name} Electric Store*
 Received: Rs: ${amount}/-
-Previous Balance: Rs: ${shopkeeper.balance + amount}/-
-Current Balance: ${shopkeeper.balance + amount}-${amount}=*Rs: ${
-        shopkeeper.balance
-      }/-*`;
+Previous Balance: Rs: ${oldBalance}/-
+Current Balance: Rs: ${newBalance}/-`;
 
       navigator.clipboard.writeText(whatsAppMessage);
       whatsAppMessage = encodeURIComponent(whatsAppMessage);
@@ -92,6 +105,27 @@ Current Balance: ${shopkeeper.balance + amount}-${amount}=*Rs: ${
   }
 }
 
+// New function for editing balance
+function handleEdit(index) {
+  const shopkeeperNamesList =
+    JSON.parse(localStorage.getItem("shopkeeperNamesList")) || [];
+  const shopkeeper = shopkeeperNamesList[index];
+  const newBalance = prompt(
+    `Enter new balance for ${shopkeeper.name}:`,
+    shopkeeper.balance
+  );
+  if (newBalance !== null && newBalance.trim() !== "" && !isNaN(newBalance)) {
+    shopkeeperNamesList[index].balance = parseInt(newBalance);
+    localStorage.setItem(
+      "shopkeeperNamesList",
+      JSON.stringify(shopkeeperNamesList)
+    );
+    renderTable();
+  } else {
+    alert("Invalid balance entered.");
+  }
+}
+
 renderTable();
 showBal.addEventListener("click", (e) => {
   let totalBalance = 0;
@@ -103,3 +137,8 @@ showBal.addEventListener("click", (e) => {
   toggleMenu();
   alert(`Total Balance: Rs: ${totalBalance}/-`);
 });
+
+const searchBar = document.getElementById("searchBar");
+if (searchBar) {
+  searchBar.addEventListener("input", renderTable);
+}

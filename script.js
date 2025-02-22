@@ -586,39 +586,39 @@ rsShow_btn.addEventListener("click", () => {
   rsShow.classList.toggle("none");
 });
 // Function to restore backup from clipboard
-async function restoreFromClipboard() {
-  toggleHamBurgar();
+// async function restoreFromClipboard() {
+//   toggleHamBurgar();
 
-  try {
-    const clipboardText = await navigator.clipboard.readText();
+//   try {
+//     const clipboardText = await navigator.clipboard.readText();
 
-    // Check if the clipboard contains valid JSON
-    let parsedData;
-    try {
-      parsedData = JSON.parse(clipboardText);
-    } catch (e) {
-      showPopup("Clipboard data is not valid JSON.", "error");
-      return;
-    }
+//     // Check if the clipboard contains valid JSON
+//     let parsedData;
+//     try {
+//       parsedData = JSON.parse(clipboardText);
+//     } catch (e) {
+//       showPopup("Clipboard data is not valid JSON.", "error");
+//       return;
+//     }
 
-    // Check if the structure is valid (e.g., products is an array of arrays)
-    if (
-      Array.isArray(parsedData) &&
-      parsedData.every((category) => Array.isArray(category))
-    ) {
-      products.length = 0; // Clear current products
-      products.push(...parsedData); // Restore from clipboard
-      localStorage.setItem("products", JSON.stringify(products)); // Save to localStorage
-      showPopup("Backup restored successfully.", "success");
-      renderTables(); // Re-render the UI
-    } else {
-      showPopup("Invalid backup structure.", "error");
-    }
-  } catch (err) {
-    showPopup("Failed to access clipboard.", "error");
-    console.error(err);
-  }
-}
+//     // Check if the structure is valid (e.g., products is an array of arrays)
+//     if (
+//       Array.isArray(parsedData) &&
+//       parsedData.every((category) => Array.isArray(category))
+//     ) {
+//       products.length = 0; // Clear current products
+//       products.push(...parsedData); // Restore from clipboard
+//       localStorage.setItem("products", JSON.stringify(products)); // Save to localStorage
+//       showPopup("Backup restored successfully.", "success");
+//       renderTables(); // Re-render the UI
+//     } else {
+//       showPopup("Invalid backup structure.", "error");
+//     }
+//   } catch (err) {
+//     showPopup("Failed to access clipboard.", "error");
+//     console.error(err);
+//   }
+// }
 
 // Function to show a popup message (success or error)
 function showPopup(message, type) {
@@ -628,9 +628,9 @@ function showPopup(message, type) {
   popup.style.backgroundColor = "black";
   // Style the popup based on the message type
   if (type === "error") {
-    popup.style.backgroundColor = "rgba(255, 0, 0, 0.8)";
+    popup.style.backgroundColor = "rgb(220, 53, 69))";
   } else if (type === "success") {
-    popup.style.backgroundColor = "rgba(0, 128, 0, 0.8)"; // Green for success
+    popup.style.backgroundColor = "rgb(34, 177, 76)"; // Green for success 
   }
 
   // Common styles for both types
@@ -658,6 +658,3 @@ changeWhatsAppNo.addEventListener("click", (e) => {
 });
 
 // Button listener for restoring from clipboard
-document
-  .getElementById("backupRestore")
-  .addEventListener("click", restoreFromClipboard);

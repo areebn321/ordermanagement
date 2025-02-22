@@ -128,6 +128,30 @@ body {
     transform: scale(0.95);
   }
 }
+
+#searchBar {
+  display: block;
+  margin: 20px auto;
+  width: 80%;
+  padding: 10px 15px;
+  border: 1px solid #94a3b8; /* light slate border */
+  border-radius: 6px;
+  background-color: #64748b; /* light slate background */
+  color: #fff;
+  &::placeholder {
+    color: #fff;
+  }
+}
+
+.edit-btn {
+  background-color: #4caf50; /* green background */
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px; /* added rounded borders */
+}
+
 a {
   text-decoration: none;
   color: #fff;
@@ -135,11 +159,13 @@ a {
 
 .homebtn {
   display: flex;
-  align-items: center;
+  flex-direction: column; /* stack buttons vertically */
+  align-items: center; /* center buttons horizontally */
   justify-content: center;
-  gap: 5px;
+  gap: 10px; /* increased gap between buttons */
 }
-/*media queries for 750
+
+/*media queries for 750 
 */
 
 @media screen and (max-width: 750px) {

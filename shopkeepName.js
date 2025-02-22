@@ -30,14 +30,18 @@ function createShopkeeperManager() {
     }
   }
 
-  function displaySavedShopkeeperNames() {
+  function displaySavedShopkeeperNames(filter = "") {
     const shopkeeperListElement = document.getElementById("shopkeeperList");
     shopkeeperListElement.innerHTML = ""; // Clear existing list
-    shopkeeperNamesList.forEach((shopkeeper) => {
-      const listItem = document.createElement("li");
-      listItem.textContent = shopkeeper.name; // Show only the name
-      shopkeeperListElement.appendChild(listItem);
-    });
+    shopkeeperNamesList
+      .filter((shopkeeper) =>
+        shopkeeper.name.toLowerCase().startsWith(filter.toLowerCase())
+      )
+      .forEach((shopkeeper) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = shopkeeper.name; // Show only the name
+        shopkeeperListElement.appendChild(listItem);
+      });
   }
 
   return { saveShopkeeperName, displaySavedShopkeeperNames };
@@ -47,8 +51,7 @@ const shopkeeperManager = createShopkeeperManager();
 
 /////////////////////////////////////
 
-// Function to display all saved shopkeeper details beneath the input field
-function displaySavedShopkeeperNames() {
+function displaySavedShopkeeperNames(filter = "") {
   const shopkeeperNamesList =
     JSON.parse(localStorage.getItem("shopkeeperNamesList")) || [];
   const savedNamesDisplayArea = document.getElementById(
@@ -59,39 +62,43 @@ function displaySavedShopkeeperNames() {
   savedNamesDisplayArea.innerHTML = "";
 
   // Create and display each shopkeeper's details
-  shopkeeperNamesList.forEach((shopkeeper) => {
-    const nameContainer = document.createElement("div");
-    nameContainer.classList.add("shopkeeper-name-item-container");
+  shopkeeperNamesList
+    .filter((shopkeeper) =>
+      shopkeeper.name.toLowerCase().startsWith(filter.toLowerCase())
+    )
+    .forEach((shopkeeper) => {
+      const nameContainer = document.createElement("div");
+      nameContainer.classList.add("shopkeeper-name-item-container");
 
-    const nameElement = document.createElement("div");
-    nameElement.textContent = `${shopkeeper.name}`;
-    nameElement.classList.add("shopkeeper-name-item");
+      const nameElement = document.createElement("div");
+      nameElement.textContent = `${shopkeeper.name}`;
+      nameElement.classList.add("shopkeeper-name-item");
 
-    const deleteCross = document.createElement("span");
-    deleteCross.textContent = "×";
-    deleteCross.classList.add("delete-cross");
+      const deleteCross = document.createElement("span");
+      deleteCross.textContent = "×";
+      deleteCross.classList.add("delete-cross");
 
-    // Add click event to set the clicked name as the input's value
-    nameElement.addEventListener("click", function () {
-      document.getElementById("shopKeeperName").value = shopkeeper.name;
-      savedNamesDisplayArea.innerHTML = ""; // Hide the list after selection
+      // Add click event to set the clicked name as the input's value
+      nameElement.addEventListener("click", function () {
+        document.getElementById("shopKeeperName").value = shopkeeper.name;
+        savedNamesDisplayArea.innerHTML = ""; // Hide the list after selection
+      });
+
+      // Add click event to delete the name with confirmation
+      deleteCross.addEventListener("click", function (event) {
+        event.stopPropagation(); // Prevent triggering the name selection event
+        const confirmDelete = confirm(
+          `Are you sure you want to delete "${shopkeeper.name}"?`
+        );
+        if (confirmDelete) {
+          deleteShopkeeperName(shopkeeper.name); // Call delete function
+        }
+      });
+
+      nameContainer.appendChild(nameElement);
+      nameContainer.appendChild(deleteCross);
+      savedNamesDisplayArea.appendChild(nameContainer);
     });
-
-    // Add click event to delete the name with confirmation
-    deleteCross.addEventListener("click", function (event) {
-      event.stopPropagation(); // Prevent triggering the name selection event
-      const confirmDelete = confirm(
-        `Are you sure you want to delete "${shopkeeper.name}"?`
-      );
-      if (confirmDelete) {
-        deleteShopkeeperName(shopkeeper.name); // Call delete function
-      }
-    });
-
-    nameContainer.appendChild(nameElement);
-    nameContainer.appendChild(deleteCross);
-    savedNamesDisplayArea.appendChild(nameContainer);
-  });
 }
 
 // Function to delete a shopkeeper name from localStorage
@@ -127,7 +134,14 @@ shopkeeperNameInput.parentNode.insertBefore(
 // Initially hide the dropdown (this ensures it's only shown when needed)
 savedNamesDisplayArea.style.display = "none";
 
-// Event listener to show shopkeeper names when input is clicked
+// Event listener to show shopkeeper names when input is clicked or typed
+shopkeeperNameInput.addEventListener("input", function () {
+  const filter = shopkeeperNameInput.value.trim();
+  displaySavedShopkeeperNames(filter);
+  savedNamesDisplayArea.style.display = "block"; // Show the dropdown
+});
+
+// Event listener to show all shopkeeper names when input is clicked
 shopkeeperNameInput.addEventListener("click", function () {
   displaySavedShopkeeperNames();
   savedNamesDisplayArea.style.display = "block"; // Show the dropdown

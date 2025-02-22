@@ -38,7 +38,7 @@ body {
   padding: 12px;
   height: 43px;
   width: 100%;
-  height: 90px;
+  height: 110px;
 }
 .mainHeading {
   font-size: 1.5rem;
@@ -198,11 +198,17 @@ body {
   #firstTable .mainHeading {
     width: 100% !important;
   }
-  #firstTable,
-  #secondTable,
+  /*   #firstTable,
+  #secondTable, */
   #thirdTable,
   #forthTable {
-    max-width: 29% !important;
+    max-width: 28% !important;
+  }
+  #firstTable {
+    max-width: 39% !important;
+  }
+  #secondTable {
+    max-width: 16% !important;
   }
   .signsParent {
     display: flex;
@@ -280,9 +286,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  #secondTable {
-    max-width: 20% !important;
   }
 }
 .addProductHeading {
@@ -693,8 +696,8 @@ body {
   }
 }
 button:disabled {
-  background-color: #ccc !important; /* Gray background for disabled state */
-  color: #666 !important; /* Light gray text */
+  background-color: #670606 !important; /* Gray background for disabled state */
+  color: #fff !important; /* Light gray text */
   cursor: not-allowed !important; /* Show a "not-allowed" cursor */
   opacity: 0.7 !important; /* Slightly transparent */
 }

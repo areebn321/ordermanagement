@@ -85,7 +85,6 @@ function setCatagoriesToLS(catagory) {
     showProductsInCatagory(0);
   }
 }
-
 // Event listener for catagory switching
 let catagories = document.querySelector(".catagories");
 catagories.addEventListener("click", (e) => {
@@ -99,6 +98,7 @@ catagories.addEventListener("click", (e) => {
 
   // Get the selected catagory index and display only products in that catagory
   const selectedCatagoryIndex = Array.from(categoriesChild).indexOf(e.target);
+  localStorage.setItem("selectedCatagoryIndex", selectedCatagoryIndex);
   showProductsInCatagory(selectedCatagoryIndex);
 });
 
@@ -106,31 +106,18 @@ catagories.addEventListener("click", (e) => {
 function showProductsInCatagory(catagoryIndex) {
   // Ensure 'products' array has space for each catagory
   if (!products[catagoryIndex]) products[catagoryIndex] = [];
-
-  renderTables(catagoryIndex);
+  // Add your logic to display products in the selected category
 }
 
-// Render tables based on the selected catagory
-function renderTables(catagoryIndex = 0) {
-  const productMenu = document.getElementById("productMenu");
-  const availableMenu = document.getElementById("availableMenu");
-  const orderQuantityMenu = document.getElementById("orderQuantity");
-  const prodPrice = document.getElementById("prodPrice");
-
-  productMenu.innerHTML = "";
-  availableMenu.innerHTML = "";
-  orderQuantityMenu.innerHTML = "";
-  prodPrice.innerHTML = "";
-
-  const selectedCatagoryProducts = products[catagoryIndex] || [];
-  console.log(selectedCatagoryProducts);
-  selectedCatagoryProducts.forEach((product, index) => {
-    addProductToTable(
-      product.name,
-      product.quantity,
-      product.order,
-      index + 1,
-      product.price
-    );
-  });
-}
+// Retrieve the selected category index from local storage and set the active category
+document.addEventListener("DOMContentLoaded", () => {
+  const selectedCatagoryIndex = localStorage.getItem("selectedCatagoryIndex");
+  if (selectedCatagoryIndex !== null) {
+    let categoriesChild = document.querySelectorAll(".categoriesChild");
+    categoriesChild.forEach((element) => {
+      element.classList.remove("isActiveCategory");
+    });
+    categoriesChild[selectedCatagoryIndex].classList.add("isActiveCategory");
+    showProductsInCatagory(selectedCatagoryIndex);
+  }
+});

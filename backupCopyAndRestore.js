@@ -1,45 +1,42 @@
 backup.addEventListener("click", (e) => {
-  navigator.clipboard.writeText(localStorage.getItem("products"));
-  toggleHamBurgar();
-  showPopup("Copied!");
+  console.log(localStorage.valueOf());
+  navigator.clipboard
+    .writeText(JSON.stringify(localStorage))
+    .then(() => {
+      toggleHamBurgar();
+      showPopup("Copied!");
+    })
+    .catch(() => {
+      showNotification("Failed to copy backup");
+    });
 });
-backupRestore.addEventListener("click", (e) => {
-  let confirmation = confirm("Are you sure you want to restore backup?");
 
-  if (confirmation === true) {
-    navigator.clipboard
-      .readText()
-      .then(function (text) {
-        try {
-          let copiedData = JSON.parse(text); // Validate if it's a valid JSON
+backupRestore.addEventListener("click", async (e) => {
+  let confirmation = confirm("Do you sure to restore backup?");
 
-          // Check if the parsed data matches the expected structure
-          if (
-            Array.isArray(copiedData) &&
-            copiedData.every(
-              (item) =>
-                typeof item.name === "string" &&
-                typeof item.quantity === "number" &&
-                typeof item.order === "number"
-            )
-          ) {
-            // If valid, store it in localStorage
-            localStorage.setItem("products", JSON.stringify(copiedData));
-            showNotification("Backup Restored");
-            setTimeout(() => {
-              window.location.reload(); // Reload to apply the restored data
-            }, 1000);
-          } else {
-            throw new Error("Invalid product structure");
-          }
-        } catch (error) {
-          // console.error("Error restoring backup: ", error);
-          showNotification("Failed to restore backup: Invalid data");
-        }
-      })
-      .catch(function (err) {
-        // console.error("Failed to read clipboard contents: ", err);
-        showNotification("Failed to read clipboard contents");
-      });
+  if (!confirmation) return;
+
+  let confirmation2 = confirm("Do you Really want to restore backup❓");
+  if (!confirmation2) return;
+  try {
+    let text = await navigator.clipboard.readText();
+    console.log("Clipboard content:", text);
+
+    let data = JSON.parse(text);
+    console.log("Parsed data:", data);
+
+    if (typeof data === "object" && data !== null) {
+      for (const key in data) {
+        localStorage.setItem(key, data[key]);
+      }
+      showPopup("Backup restored successfully!", "success");
+      window.location.reload();
+    } else {
+      throw new Error("Invalid data");
+    }
+  } catch (error) {
+    showPopup("Failed to restore backup: Invalid data", "error");
   }
+
+  toggleHamBurgar();
 });
