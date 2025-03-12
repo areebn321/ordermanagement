@@ -630,7 +630,7 @@ function showPopup(message, type) {
   if (type === "error") {
     popup.style.backgroundColor = "rgb(220, 53, 69))";
   } else if (type === "success") {
-    popup.style.backgroundColor = "rgb(34, 177, 76)"; // Green for success 
+    popup.style.backgroundColor = "rgb(34, 177, 76)"; // Green for success
   }
 
   // Common styles for both types
@@ -657,4 +657,69 @@ changeWhatsAppNo.addEventListener("click", (e) => {
   showWhatsAppWindow();
 });
 
-// Button listener for restoring from clipboard
+document.addEventListener("DOMContentLoaded", function () {
+  // ...existing code...
+
+  const searchInput = document.getElementById("searchProducts");
+  const productMenu = document.getElementById("productMenu");
+  const availableMenu = document.getElementById("availableMenu");
+  const orderQuantityMenu = document.getElementById("orderQuantity");
+  const prodPrice = document.getElementById("prodPrice");
+  const mainTables = document.querySelector(".mainTables"); // container for the tables
+  const firstTable = document.getElementById("firstTable");
+  const secondTable = document.getElementById("secondTable");
+  const thirdTable = document.getElementById("thirdTable");
+  const forthTable = document.getElementById("forthTable");
+
+  searchInput.addEventListener("input", function (e) {
+    const term = e.target.value.toLowerCase();
+    const items = productMenu.children;
+    let found = false;
+    let realIndex = 0; // index for corresponding cells in other tables
+
+    for (let i = 0; i < items.length; i++) {
+      if (items[i].id === "noProductFound") continue;
+      if (items[i].textContent.toLowerCase().includes(term)) {
+        items[i].style.display = "";
+        availableMenu.children[realIndex].style.display = "";
+        orderQuantityMenu.children[realIndex].style.display = "";
+        prodPrice.children[realIndex].style.display = "";
+        found = true;
+      } else {
+        items[i].style.display = "none";
+        availableMenu.children[realIndex].style.display = "none";
+        orderQuantityMenu.children[realIndex].style.display = "none";
+        prodPrice.children[realIndex].style.display = "none";
+      }
+      realIndex++;
+    }
+
+    if (!found) {
+      firstTable.style.display = "none";
+      secondTable.style.display = "none";
+      thirdTable.style.display = "none";
+      forthTable.style.display = "none";
+      let noProduct = document.getElementById("noProductFound");
+      if (!noProduct) {
+        noProduct = document.createElement("div");
+        noProduct.id = "noProductFound";
+        noProduct.textContent = "No Product Found";
+        noProduct.style.fontSize = "24px";
+        noProduct.style.textAlign = "center";
+        noProduct.style.margin = "20px 0";
+        mainTables.appendChild(noProduct);
+      }
+    } else {
+      firstTable.style.display = "";
+      secondTable.style.display = "";
+      thirdTable.style.display = "";
+      forthTable.style.display = "";
+      let noProduct = document.getElementById("noProductFound");
+      if (noProduct) {
+        noProduct.parentNode.removeChild(noProduct);
+      }
+    }
+  });
+
+  // ...existing code...
+});

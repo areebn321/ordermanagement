@@ -11,7 +11,7 @@ function getFormattedDateTime() {
   const seconds = String(now.getSeconds()).padStart(2, "0");
   const ampm = now.getHours() >= 12 ? "PM" : "AM";
 
-  return `${month}/${day}/${year} at ${hours}:${minutes}:${seconds} ${ampm}`;
+  return `${day}/${month}/${year} at ${hours}:${minutes}:${seconds} ${ampm}`;
 }
 
 function renderTable() {
@@ -83,7 +83,7 @@ function handleReceived(index) {
 Received From *${shopkeeper.name} Electric Store*
 Received: Rs: ${amount}/-
 Previous Balance: Rs: ${oldBalance}/-
-Current Balance: Rs: ${newBalance}/-`;
+*Current Balance: Rs: ${newBalance}/-*`;
 
       navigator.clipboard.writeText(whatsAppMessage);
       whatsAppMessage = encodeURIComponent(whatsAppMessage);
