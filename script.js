@@ -1,4 +1,19 @@
 let activeDukanDar;
+
+// script.js
+function showToast(message, type) {
+  const toastContainer = document.getElementById("toast-container");
+  const toast = document.createElement("div");
+  toast.className = `toast ${type}`;
+  toast.innerText = message;
+
+  toastContainer.appendChild(toast);
+
+  // Remove the toast after 3 seconds
+  setTimeout(() => {
+    toast.remove();
+  }, 3000);
+}
 setTimeout(() => {
   // let sss = document.querySelectorAll(".shopkeeper-name-item-container");
   // console.log(sss);
@@ -384,7 +399,7 @@ function resetInputs() {
   document.getElementById("productPrice").value = "";
 }
 
-function makeOrder() {
+async function makeOrder() {
   if (!activeDukanDar) {
     showError("Please select a shopkeeper from the saved list.");
     return;
@@ -503,22 +518,26 @@ ${orderSummary}
     .writeText(orderMessage)
     .then(() => {
       console.log("Order details copied to clipboard.");
+      showToast("Order details copied to clipboard.", "success");
     })
     .catch((err) => {
       console.error("Failed to copy order details to clipboard:", err);
+      showToast("Failed to copy order details to clipboard.", "error");
     });
-  let downloadBill = confirm("Do You Want To Download Bill");
-  if (downloadBill) {
-    // Redirect in the same tab instead of opening a new window
-    window.location.href = "./invoice.html?data=" + btoa(orderMessage);
-  }
-  // Send order via WhatsApp (your phone number added here)
-  else {
-    const phoneNumber = Number(localStorage.getItem("whatsAppNo"));
-    const encodedMessage = encodeURIComponent(orderMessage);
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-    window.open(whatsappUrl, "_blank");
-  }
+  setTimeout(() => {
+    let downloadBill = confirm("Do You Want To Download Bill");
+    if (downloadBill) {
+      // Redirect in the same tab instead of opening a new window
+      window.location.href = "./invoice.html?data=" + btoa(orderMessage);
+    }
+    // Send order via WhatsApp (your phone number added here)
+    else {
+      const phoneNumber = Number(localStorage.getItem("whatsAppNo"));
+      const encodedMessage = encodeURIComponent(orderMessage);
+      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+      window.open(whatsappUrl, "_blank");
+    }
+  }, 1500);
 
   // Refresh the UI to reflect changes
   shopKeeperCity.value = "";

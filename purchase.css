@@ -1,0 +1,198 @@
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: "Bricolage Grotesque", sans-serif;
+  font-weight: 450;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2px;
+  text-align: center;
+  background-color: rgb(182, 173, 255);
+}
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+}
+body {
+  -ms-overflow-style: none;
+}
+
+h1 {
+  font-size: 36px;
+  text-align: center;
+}
+
+.table-cell {
+  border: 1px solid #fff;
+  padding: 8px;
+}
+
+.table-container {
+  width: 100%;
+  margin: 20px auto;
+  overflow-x: auto;
+  max-height: 400px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2f4f4f;
+  color: #fff;
+}
+
+.header-row {
+  background-color: rgb(87, 0, 9);
+  color: #ffffff;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.edit-btn {
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.5s;
+}
+
+.categories {
+  width: 100%;
+  /* max-width: 1200px; */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.categories h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.design-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.design-btn:hover {
+  background-color: #45a049;
+}
+
+.design-btn.activeCategory {
+  background-color: #ff9800;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 28px;
+  }
+
+  .design-btn {
+    padding: 8px 16px;
+  }
+
+  .table-cell {
+    padding: 6px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  .design-btn {
+    padding: 6px 12px;
+  }
+
+  .table-cell {
+    padding: 4px;
+  }
+}
+.btn {
+  padding: 5px 10px;
+  margin: 2px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: #0056b3;
+}
+#makeOrderError {
+  color: red;
+}
+#totalBillParent {
+  position: sticky;
+  top: 0;
+
+  width: 100%;
+  background-color: navy;
+  color: white;
+  padding: 20px 0;
+  border-radius: 5px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+th:nth-child(4) {
+  font-size: 1.5rem;
+}
+td:nth-child(4) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.findItem {
+  width: 100%;
+}
+
+.findItem input {
+  width: 90%;
+  padding: 10px;
+  font-size: 1.5rem;
+  border: 1px solid #eee;
+  border-radius: 5px;
+  background-color: #1c1c1c;
+  color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 20px;
+  transition: background-color 0.3s ease;
+}
+
+.findItem input:focus {
+  outline: none;
+  border-color: #00bfa5;
+  box-shadow: 0 0 5px rgba(0, 191, 165, 0.4);
+  background-color: #000a30;
+}
+
+.findItem input::placeholder {
+  text-align: center;
+  color: #ccc;
+  font-size: 1.4rem;
+}
