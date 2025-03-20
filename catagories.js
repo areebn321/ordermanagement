@@ -114,10 +114,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const selectedCatagoryIndex = localStorage.getItem("selectedCatagoryIndex");
   if (selectedCatagoryIndex !== null) {
     let categoriesChild = document.querySelectorAll(".categoriesChild");
-    categoriesChild.forEach((element) => {
-      element.classList.remove("isActiveCategory");
-    });
-    categoriesChild[selectedCatagoryIndex].classList.add("isActiveCategory");
-    showProductsInCatagory(selectedCatagoryIndex);
+    if (categoriesChild[selectedCatagoryIndex]) {
+      // Simulate click to both select and open the category properly.
+      categoriesChild[selectedCatagoryIndex].click();
+    }
   }
 });

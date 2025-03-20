@@ -385,6 +385,10 @@ function resetInputs() {
 }
 
 function makeOrder() {
+  if (!activeDukanDar) {
+    showError("Please select a shopkeeper from the saved list.");
+    return;
+  }
   let orderDetails = []; // Array to store order details
   let totalAmount = 0;
 
@@ -439,44 +443,55 @@ function makeOrder() {
   let orderMessage;
   console.log(activeDukanDar);
 
-  let orderDukan = JSON.parse(localStorage.getItem("shopkeeperNamesList")).find(
+  let shopkeeperList = JSON.parse(localStorage.getItem("shopkeeperNamesList"));
+  // Ensure shopkeeperList exists and is an array
+  if (!Array.isArray(shopkeeperList)) {
+    showError("No shopkeeper list found.");
+    return;
+  }
+
+  const DukanIndex = shopkeeperList.findIndex(
     (item) => item.name === activeDukanDar
   );
-  let ch = JSON.parse(localStorage.getItem("shopkeeperNamesList"));
-  let num = ch;
-  const DukanIndex = ch.findIndex((item) => item.name === activeDukanDar);
+
+  // Check if the active shopkeeper was found
+  if (DukanIndex === -1) {
+    showError("Shopkeeper not found. Please select a valid shopkeeper.");
+    return;
+  }
+
+  // Use shopkeeperList instead of num for clarity
+  let currentShopkeeper = shopkeeperList[DukanIndex];
 
   if (Number(discount)) {
     totalAmountWithDiscount = totalAmount - (totalAmount * discount) / 100;
-
     orderMessage = `${date} at ${time}
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
 Bill: Rs: ${totalAmount}-${discount}%/-
 *Total Bill: Rs: ${totalAmountWithDiscount}/-*
-*Previous Balance: Rs: ${num[DukanIndex].balance}/-*
+*Previous Balance: Rs: ${currentShopkeeper.balance}/-*
 *Grand Total: Rs: ${
-      parseInt(num[DukanIndex].balance) + totalAmountWithDiscount
+      parseInt(currentShopkeeper.balance) + totalAmountWithDiscount
     }/-*
 `;
-    let prvBal = num[DukanIndex].balance;
-    num[DukanIndex].balance =
+    let prvBal = currentShopkeeper.balance;
+    currentShopkeeper.balance =
       parseInt(prvBal) + parseInt(totalAmountWithDiscount);
-
-    localStorage.setItem("shopkeeperNamesList", JSON.stringify(num));
+    shopkeeperList[DukanIndex] = currentShopkeeper;
+    localStorage.setItem("shopkeeperNamesList", JSON.stringify(shopkeeperList));
   } else {
-    // Order message format including both shopkeeper name and a fixed store name
     orderMessage = `${date} at ${time}
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
 *Total Bill: Rs: ${totalAmount}/-*
-*Previous Balance: Rs: ${num[DukanIndex].balance}/-*
-*Grand Total: Rs: ${parseInt(num[DukanIndex].balance) + totalAmount}/-*
+*Previous Balance: Rs: ${currentShopkeeper.balance}/-*
+*Grand Total: Rs: ${parseInt(currentShopkeeper.balance) + totalAmount}/-*
 `;
-    let prvBal = num[DukanIndex].balance;
-    num[DukanIndex].balance = parseInt(prvBal) + parseInt(totalAmount);
-
-    localStorage.setItem("shopkeeperNamesList", JSON.stringify(num));
+    let prvBal = currentShopkeeper.balance;
+    currentShopkeeper.balance = parseInt(prvBal) + parseInt(totalAmount);
+    shopkeeperList[DukanIndex] = currentShopkeeper;
+    localStorage.setItem("shopkeeperNamesList", JSON.stringify(shopkeeperList));
   }
 
   // Show notification with order details and total amount
@@ -492,13 +507,18 @@ ${orderSummary}
     .catch((err) => {
       console.error("Failed to copy order details to clipboard:", err);
     });
-
+  let downloadBill = confirm("Do You Want To Download Bill");
+  if (downloadBill) {
+    // Redirect in the same tab instead of opening a new window
+    window.location.href = "./invoice.html?data=" + btoa(orderMessage);
+  }
   // Send order via WhatsApp (your phone number added here)
-  const phoneNumber = Number(localStorage.getItem("whatsAppNo")); // Your phone number
-  const encodedMessage = encodeURIComponent(orderMessage);
-  const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-  window.open(whatsappUrl, "_blank");
+  else {
+    const phoneNumber = Number(localStorage.getItem("whatsAppNo"));
+    const encodedMessage = encodeURIComponent(orderMessage);
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+    window.open(whatsappUrl, "_blank");
+  }
 
   // Refresh the UI to reflect changes
   shopKeeperCity.value = "";

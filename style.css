@@ -267,6 +267,9 @@ body {
     margin: 0 !important;
     padding: 0 !important;
   }
+  .icontent a {
+    width: 100%;
+  }
   .icontent button {
     width: 90% !important;
   }
@@ -724,4 +727,5 @@ button:disabled {
 #searchProducts::placeholder {
   text-align: center;
   color: #ccc;
+  font-size: 1rem;
 }
