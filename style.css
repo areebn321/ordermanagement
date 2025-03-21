@@ -259,6 +259,7 @@ body {
     width: 100%;
     gap: 20px;
     font-size: 1.5rem !important;
+    overflow: auto !important;
   }
   .hamburger_container {
     left: 3%;
@@ -389,12 +390,16 @@ body {
   align-items: center;
   margin-top: 2%;
   /* justify-content: center; */
+
+  overflow: auto;
   height: 100vh;
   width: 100vw;
   gap: 20px;
   font-size: 1.5rem;
 }
-
+.w-full {
+  width: 100% !important;
+}
 .icontent button {
   padding: 10px 20px;
   border-radius: 5px;
@@ -765,4 +770,13 @@ button:disabled {
   100% {
     transform: scale(1);
   }
+}
+::-webkit-scrollbar {
+  display: none;
+}
+html {
+  scrollbar-width: none;
+}
+body {
+  -ms-overflow-style: none;
 }
