@@ -18,7 +18,7 @@ function updateTotal() {
   productsToPurchase.forEach((product) => {
     total += product.purchasedValue * product.purchasedCount;
   });
-  totalBill.textContent = formatWithCommas(Number(total));
+  totalBill.textContent = formatWithCommas(Number(total).toFixed(2));
 }
 
 function addPurchaseValue() {
@@ -216,7 +216,11 @@ makeOrder.addEventListener("click", (e) => {
 
       summaryForSeller += `${product.name}: ${product.purchasedCount} pcs \n`;
 
-      summaryForCustomer += `${product.name}: ${product.purchasedCount} pcs @ Rs:${product.purchasedValue}/- each = Rs:${purchasePrice}/- \n`;
+      summaryForCustomer += `${product.name}: ${
+        product.purchasedCount
+      } pcs @ Rs:${product.purchasedValue}/- each = Rs:${purchasePrice.toFixed(
+        2
+      )}/- \n`;
       product.purchasedCount = 0;
     });
     navigator.clipboard.writeText(summaryForCustomer);

@@ -419,9 +419,9 @@
           if (i === 0) dateTime = line
           if (i === 1) customer = line
           // new discount parsing: matches lines like "Bill: Rs: 4650-50%/-"
-          let discountMatch = line.match(/Bill:\s*Rs:\s*\d+-(\d+)%\/-/)
+          let discountMatch = line.match(/Bill:\s*Rs:\s*\d+-(\d+(\.\d+)?)%\/-/)
           if (discountMatch) {
-            discount = parseInt(discountMatch[1])
+            discount = parseFloat(discountMatch[1])
           }
           let match = line.match(
             /(.+?): (\d+) pcs @ Rs: (\d+)\/- each = Rs: (\d+)\/-/
@@ -480,7 +480,6 @@
           }</td><td>${item.qty * item.price}</td>`
           tbody.appendChild(row)
           total += item.qty * item.price
-          // total = formatWithCommas(total)
         })
 
         // remove any existing discount and current balance boxes before adding new ones
@@ -503,12 +502,12 @@
           const discountBox = document.createElement('p')
           discountBox.id = 'discount-box'
           discountBox.innerHTML = `Discount:&ensp;<span>${formatWithCommas(
-            discountValue
-          )} (${discount}%)</span>`
+            discountValue.toFixed(2)
+          )} (${discount.toFixed(2)}%)</span>`
           const currentBalanceBox = document.createElement('p')
           currentBalanceBox.id = 'current-balance-box'
           currentBalanceBox.innerHTML = `Total Bill:&ensp;<span> ${formatWithCommas(
-            currentBalance
+            currentBalance.toFixed(2)
           )}</span>`
           const insideSummary = document.querySelector('.insideSummary')
           // insert discountBox and currentBalanceBox after the first paragraph (Total Bill)
@@ -522,7 +521,8 @@
             '&ensp;' + formatWithCommas(total)
         }
         document.getElementById('grand-total').innerHTML =
-          '&ensp;' + formatWithCommas(currentBalance + previousBalance)
+          '&ensp;' +
+          formatWithCommas((currentBalance + previousBalance).toFixed(2))
       }
 
       function shareInvoice() {

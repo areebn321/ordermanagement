@@ -72,12 +72,12 @@ function handleReceived(index) {
     `Enter amount you received from ${shopkeeper.name}:`
   );
   if (!isNaN(receivedAmount) && receivedAmount.trim() !== "") {
-    const amount = parseInt(receivedAmount);
+    const amount = parseFloat(receivedAmount);
     if (amount > 0) {
-      // Remove Math.max to allow negative balances
-      const oldBalance = parseInt(shopkeeper.balance);
-      const newBalance = oldBalance - amount;
-      shopkeeperNamesList[index].balance = newBalance;
+      const oldBalance = parseFloat(shopkeeper.balance).toFixed(2);
+      let newBalance = parseFloat(oldBalance) - parseFloat(amount);
+      newBalance = newBalance.toFixed(2);
+      shopkeeperNamesList[index].balance = parseFloat(newBalance).toFixed(2);
 
       let whatsAppMessage = `Received At: ${getFormattedDateTime()}
 Received From *${shopkeeper.name} Electric Store*
@@ -115,7 +115,7 @@ function handleEdit(index) {
     shopkeeper.balance
   );
   if (newBalance !== null && newBalance.trim() !== "" && !isNaN(newBalance)) {
-    shopkeeperNamesList[index].balance = parseInt(newBalance);
+    shopkeeperNamesList[index].balance = parseFloat(newBalance);
     localStorage.setItem(
       "shopkeeperNamesList",
       JSON.stringify(shopkeeperNamesList)

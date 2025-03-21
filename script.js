@@ -479,29 +479,35 @@ async function makeOrder() {
   let currentShopkeeper = shopkeeperList[DukanIndex];
 
   if (Number(discount)) {
-    totalAmountWithDiscount = totalAmount - (totalAmount * discount) / 100;
+    totalAmountWithDiscount = (
+      totalAmount -
+      (totalAmount * discount) / 100
+    ).toFixed(2);
     orderMessage = `${date} at ${time}
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
 Bill: Rs: ${totalAmount}-${discount}%/-
 *Total Bill: Rs: ${totalAmountWithDiscount}/-*
 *Previous Balance: Rs: ${currentShopkeeper.balance}/-*
-*Grand Total: Rs: ${
-      parseInt(currentShopkeeper.balance) + totalAmountWithDiscount
-    }/-*
+*Grand Total: Rs: ${(
+      Number(currentShopkeeper.balance) + Number(totalAmountWithDiscount)
+    ).toFixed(2)}/-*
 `;
     let prvBal = currentShopkeeper.balance;
-    currentShopkeeper.balance =
-      parseInt(prvBal) + parseInt(totalAmountWithDiscount);
+    currentShopkeeper.balance = (
+      parseFloat(prvBal) + parseFloat(totalAmountWithDiscount)
+    ).toFixed(2);
     shopkeeperList[DukanIndex] = currentShopkeeper;
     localStorage.setItem("shopkeeperNamesList", JSON.stringify(shopkeeperList));
   } else {
     orderMessage = `${date} at ${time}
 *${shopKeperName} Electric Store ${shopKeeperCityI}*
 ${orderSummary}
-*Total Bill: Rs: ${totalAmount}/-*
+*Total Bill: Rs: ${totalAmount.toFixed(2)}/-*
 *Previous Balance: Rs: ${currentShopkeeper.balance}/-*
-*Grand Total: Rs: ${parseInt(currentShopkeeper.balance) + totalAmount}/-*
+*Grand Total: Rs: ${parseFloat(
+      currentShopkeeper.balance + parseFloat(totalAmount)
+    ).toFixed(2)}/-*
 `;
     let prvBal = currentShopkeeper.balance;
     currentShopkeeper.balance = parseInt(prvBal) + parseInt(totalAmount);
