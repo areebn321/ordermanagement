@@ -140,11 +140,6 @@ body {
   padding: 12px 8px;
 }
 @media only screen and (max-width: 720px) {
-  body {
-    /* padding: 0 15px 0 15px; */
-    /* width: 5vw !important; */
-  }
-
   body * {
     font-size: 0.9rem;
     text-align: center;
@@ -682,6 +677,7 @@ body {
 
 #whatsAppNoInput {
   -moz-appearance: textfield;
+  appearance: textfield;
 }
 .whatsAppNoParent h1 {
   font-size: 28px;
