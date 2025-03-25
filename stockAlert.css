@@ -1,0 +1,163 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  /* font-family: "popins", sans-serif; */
+  font-family: "popins";
+  /* display: flex; */
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+
+  min-height: 100vh;
+  /* min-width: 100vw; */
+  background: rgb(0, 25, 55);
+  color: #fff;
+}
+li {
+  list-style: none;
+}
+a {
+  text-decoration: none;
+  color: #fff;
+}
+.mainHeading {
+  text-align: center;
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  letter-spacing: 1px;
+  border-bottom: 2px solid #00bfa5;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+.categories {
+  width: 100%;
+  /* max-width: 1200px; */
+  margin: 20px auto;
+  text-align: center;
+}
+
+.categories h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.design-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.design-btn:hover {
+  background-color: #45a049;
+}
+
+.design-btn.activeCategory {
+  background-color: #ff9800;
+  color: white;
+}
+
+.design-btn.min {
+  background-color: #e53935; /* Red color for low stock */
+  color: white;
+  font-weight: bold;
+}
+
+.design-btn.min:hover {
+  background-color: #d32f2f;
+}
+
+.design-btn.activeCategory.min {
+  background: linear-gradient(
+    45deg,
+    #e53935,
+    #ff9800
+  ); /* Red to yellow gradient */
+  color: white;
+  font-weight: bold;
+}
+
+table {
+  width: 90%;
+  margin: 20px auto;
+  border-collapse: collapse;
+  font-size: 16px;
+  text-align: left;
+}
+
+table thead {
+  background-color: #4caf50;
+  color: white;
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f946;
+}
+
+table tr:hover {
+  background-color: #f1f1f115;
+}
+
+table th {
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+button {
+  background-color: #ff9800;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #e68900;
+}
+thead tr {
+  background-color: #3e8e41;
+  color: white;
+}
+thead tr:hover {
+  background-color: #3e8e41;
+}
+nav {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  flex-direction: column;
+  background: #004691;
+  width: 100%;
+  padding: 10px;
+  color: #fff;
+}
+#showAllProducts {
+  display: flex;
+  align-items: center;
+  background: #004691;
+  padding: 10px 23px;
+  color: #fff;
+  justify-content: center;
+  margin: auto;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    background-color: #004691ad;
+  }
+}

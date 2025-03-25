@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="password.css" />
   </head>
   <body>
+    <div class="insufficientStock">!</div>
+    <!-- <div class="insufficientStock">Insufficient Stock!</div> -->
     <div id="toast-container"></div>
     <div id="passwordOverlay" class="nonee">
       <div id="passwordWindow">
@@ -51,30 +53,49 @@
             <h1 class="anyOption">Choose Any Option</h1>
             <a
               href="./ledger.html"
-              style="color: #000; text-decoration: none; width: 30% !important"
+              style="color: #000; text-decoration: none"
+              class="w-30"
             >
-              <button class="w-full">Check Ledger</button></a
-            >
-            <button id="addProductBtnHam">Add Product</button>
+              <button class="w-full">Check Ledger</button>
+            </a>
             <!-- <button id="makeInvoice">Make Invoice</button> -->
             <a
               href="./invoice.html"
-              style="color: #000; text-decoration: none; width: 30% !important"
+              id="makeInvoice"
+              style="color: #000; text-decoration: none"
+              class="w-30"
             >
-              <button class="w-full">Make Invoice</button></a
-            >
+              <button class="w-full">Make Invoice</button>
+            </a>
             <a
               href="./purchase.html"
-              style="color: #000; text-decoration: none; width: 30% !important"
+              style="color: #000; text-decoration: none"
+              class="w-30"
             >
-              <button class="w-full">Purchase</button></a
+              <button class="w-full">Purchase</button>
+            </a>
+            <button id="addProductBtnHam">Add Product</button>
+            <a
+              href="./stockalert.html"
+              style="color: #000; text-decoration: none"
+              class="w-30"
             >
+              <button class="w-full">Stock Alert</button>
+            </a>
+            <a
+              href="./stockmanagement.html"
+              style="color: #000; text-decoration: none"
+              class="w-30"
+            >
+              <button class="w-full">Stock Management</button>
+            </a>
+            <button id="addCatagories">Add Categories</button>
+            <button id="editCatagories">Edit Categories Name</button>
             <button id="showBalance">Show Balance</button>
             <button id="changeWhatsAppNo">Change WhatsApp Number</button>
             <button id="backup">Copy Data</button>
             <button id="backupRestore">Restore Backup</button>
-            <button id="addCatagories">Add Categories</button>
-            <button id="editCatagories">Edit Categories Name</button>
+
             <button id="clearLS" style="margin-bottom: 80px">
               Reset Full App
             </button>
@@ -185,5 +206,6 @@
     <script src="/editCategoriy.js"></script>
     <script src="/password.js"></script>
     <script src="/addMakeOrderFunc.js"></script>
+    <script src="/showError.js"></script>
   </body>
 </html>

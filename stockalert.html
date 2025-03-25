@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stock Alert | Order Management</title>
+    <link rel="stylesheet" href="stockAlert.css" />
+  </head>
+  <body>
+    <nav>
+      <p>
+        Total Bill Selected Category Rs:<span id="totalBillCategory"></span>
+      </p>
+      <p>Total Bill Rs:<span id="totalBill"></span></p>
+    </nav>
+    <div>
+      <h1 class="mainHeading">Stock Alert</h1>
+    </div>
+    <!-- make a button -->
+    <button id="showAllProducts">Show all Products</button>
+    <div class="categories">
+      <h1>Categories</h1>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Available Stock</th>
+          <th>Min Stock</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+    </table>
+    <script src="stockAlert.js"></script>
+    <script>
+      function showTable(count = 0) {
+        const rawData = JSON.parse(localStorage.getItem('products')) || []
+        const normalizedData = Array.isArray(rawData[0]) ? rawData : [rawData]
+        const products = normalizedData[count] || []
+
+        if (!Array.isArray(products)) {
+          console.error('Invalid data format for products:', products)
+          return
+        }
+
+        const table = document.querySelector('table')
+        const existingTbody = table.querySelector('tbody')
+        if (existingTbody) {
+          table.removeChild(existingTbody)
+        }
+
+        const tbody = document.createElement('tbody')
+        products
+          .filter(product => product.quantity < product.minStock)
+          .forEach(product => {
+            const row = document.createElement('tr')
+            const name = document.createElement('td')
+            const availableStock = document.createElement('td')
+            const minStock = document.createElement('td')
+            const action = document.createElement('td')
+            const button = document.createElement('button')
+
+            button.innerText = 'Edit MinStock'
+            action.appendChild(button)
+            button.addEventListener('click', () => {
+              const pr = prompt('Enter the new value of ' + product.name)
+              if (!isNaN(pr) && pr !== null) {
+                product.minStock = parseInt(pr)
+                localStorage.setItem('products', JSON.stringify(rawData))
+                showTable(count) // Refresh the table
+                setTimeout(() => {
+                  calculateTotalBill() // Ensure the bill is recalculated
+                }, 0)
+              }
+            })
+
+            name.innerText = product.name
+            availableStock.innerText = product.quantity
+            minStock.innerText = product.minStock
+
+            row.appendChild(name)
+            row.appendChild(availableStock)
+            row.appendChild(minStock)
+            row.appendChild(action)
+            tbody.appendChild(row)
+          })
+
+        table.appendChild(tbody)
+      }
+
+      document.addEventListener('DOMContentLoaded', () => {
+        // updateMinStock();
+        showCategory()
+        showTable()
+      })
+    </script>
+  </body>
+</html>

@@ -250,7 +250,7 @@ body {
     align-items: center;
     margin-top: 2%;
     justify-content: center;
-    height: 100%;
+    /* height: 100%; */
     width: 100%;
     gap: 20px;
     font-size: 1.5rem !important;
@@ -286,6 +286,12 @@ body {
     align-items: center;
     justify-content: center;
   }
+  #makeInvoice {
+    width: 100%;
+  }
+}
+.w-30 {
+  width: 30%;
 }
 .addProductHeading {
   position: relative;
@@ -373,11 +379,12 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgb(0, 0, 0);
   z-index: 10000;
   text-align: center;
   transition: all 0.5s;
   opacity: 1;
+  overflow: auto;
 }
 .icontent {
   display: flex;
@@ -387,7 +394,7 @@ body {
   /* justify-content: center; */
 
   overflow: auto;
-  height: 100vh;
+  /* height: 100vh; */
   width: 100vw;
   gap: 20px;
   font-size: 1.5rem;
@@ -753,6 +760,9 @@ button:disabled {
 .toast.success {
   background-color: #4caf50;
 }
+.toast.error {
+  background-color: #ac0505;
+}
 
 @keyframes bump {
   0% {
@@ -775,4 +785,30 @@ html {
 }
 body {
   -ms-overflow-style: none;
+}
+.insufficientStock {
+  position: absolute;
+  top: 0;
+  right: 0;
+  clip-path: polygon(
+    50% 0%,
+    90% 20%,
+    100% 60%,
+    75% 100%,
+    25% 100%,
+    0% 60%,
+    10% 20%
+  );
+  z-index: 9999999;
+  background-color: linear-gradient(to right, #ff0000, #830909);
+  background-color: #9e0101;
+  color: #fff;
+  /* padding: 10px 200px; */
+  height: 30px;
+  width: 30px;
+  font-size: 1rem;
+  text-align: center;
+  display: none;
+  align-items: center;
+  justify-content: center;
 }

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Coming Soon</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background: #0a0a0a;
+        color: #fff;
+        font-family: Arial, sans-serif;
+        text-align: center;
+        overflow: hidden;
+      }
+      .container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .coming-soon {
+        font-size: 4rem;
+        font-weight: bold;
+        text-transform: uppercase;
+        position: relative;
+        animation: glow 1.5s infinite alternate;
+      }
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px #a855f7, 0 0 20px #9333ea, 0 0 30px #7e22ce;
+        }
+        100% {
+          text-shadow: 0 0 20px #a855f7, 0 0 30px #9333ea, 0 0 40px #7e22ce;
+        }
+      }
+      .countdown {
+        font-size: 2rem;
+        margin-top: 20px;
+      }
+      .particle {
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        background: #a855f7;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: float 4s linear infinite;
+      }
+      @keyframes float {
+        0% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) scale(0);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="coming-soon">Coming Soon</div>
+      <div class="countdown" id="countdown"></div>
+    </div>
+    <script>
+      function updateCountdown() {
+        const launchDate = new Date('May 1, 2025 00:00:00').getTime()
+        const now = new Date().getTime()
+        const timeLeft = launchDate - now
+
+        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24))
+        const hours = Math.floor(
+          (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        )
+        const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60))
+        const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000)
+
+        document.getElementById(
+          'countdown'
+        ).innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`
+
+        if (timeLeft < 0) {
+          document.getElementById('countdown').innerText = 'We are live!'
+        }
+      }
+      setInterval(updateCountdown, 1000)
+      updateCountdown()
+
+      function createParticles() {
+        for (let i = 0; i < 50; i++) {
+          let particle = document.createElement('div')
+          particle.classList.add('particle')
+          document.body.appendChild(particle)
+
+          let size = Math.random() * 5 + 2
+          particle.style.width = size + 'px'
+          particle.style.height = size + 'px'
+          particle.style.left = Math.random() * window.innerWidth + 'px'
+          particle.style.top = Math.random() * window.innerHeight + 'px'
+          particle.style.animationDuration = Math.random() * 5 + 3 + 's'
+        }
+      }
+      createParticles()
+    </script>
+  </body>
+</html>
