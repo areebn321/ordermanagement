@@ -6,6 +6,7 @@ function checkStockForError() {
   rawData.forEach((e) => {
     // console.log(e);
     e.forEach((product) => {
+      product.minStock == null ? length++ : null;
       if (
         Number(product.quantity) <= Number(product.minStock) &&
         Number(product.quantity) != Number(product.minStock)
