@@ -161,3 +161,23 @@ nav {
     background-color: #004691ad;
   }
 }
+.circle {
+  position: fixed;
+  top: 2%;
+  left: 1%;
+  width: 40px;
+  height: 40px;
+  background-color: #383838;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  color: #eee;
+  cursor: pointer;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+  &:hover {
+    background-color: #555;
+  }
+}

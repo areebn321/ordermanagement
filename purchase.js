@@ -67,6 +67,7 @@ function showTable(selectIndex = 0) {
     td1.classList.add("table-cell");
     td2.classList.add("table-cell");
     td3.classList.add("table-cell");
+    td3.classList.add("quantity");
     td4.classList.add("table-cell");
     td5.classList.add("table-cell");
     editBtn.textContent = "Edit";
@@ -172,11 +173,12 @@ function showTable(selectIndex = 0) {
 let selectedCategory = 0;
 function showCategory() {
   const category = JSON.parse(localStorage.getItem("catagories"));
+
   const categoriesContainer = document.querySelector(".categories");
   categoriesContainer.innerHTML = "<h1>Categories</h1>";
 
   category.forEach((element, i) => {
-    if (i <= JSON.parse(localStorage.getItem("products")).length - 2) {
+    if (i <= JSON.parse(localStorage.getItem("products")).length - 1) {
       const button = document.createElement("button");
       button.classList.add("design-btn");
       button.textContent = element;

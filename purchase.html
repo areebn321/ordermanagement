@@ -5,8 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Order Management | Purchase</title>
     <link rel="stylesheet" href="purchase.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <style>
+      .quantity {
+        padding: 0;
+        width: 7%;
+      }
+    </style>
   </head>
   <body>
+    <a href="./index.html">
+      <div class="circle">
+        <i class="fa-solid fa-arrow-left"></i>
+      </div>
+    </a>
     <div id="totalBillParent">
       Total Bill Now Rs:
       <span id="totalBill"></span>
@@ -34,7 +52,7 @@
           <tr class="header-row">
             <th class="table-cell">Name</th>
             <th class="table-cell">Price</th>
-            <th class="table-cell">Quantity</th>
+            <th class="table-cell quantity">Quantity</th>
             <th class="table-cell">+/-</th>
             <th class="table-cell">Edit Price</th>
           </tr>
