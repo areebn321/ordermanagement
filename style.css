@@ -43,7 +43,7 @@ body {
 .mainHeading {
   font-size: 1.5rem;
   height: 76px;
-  background-color: #1717a5;
+  background-color: #051f1f;
   /* padding: 0; */
   /* height: 15vh; */
   /* padding-bottom: 40px;
@@ -140,6 +140,11 @@ body {
   padding: 12px 8px;
 }
 @media only screen and (max-width: 720px) {
+  #searchProducts {
+    &::placeholder {
+      font-size: 4.5vw !important;
+    }
+  }
   body * {
     font-size: 0.9rem;
     text-align: center;
@@ -147,6 +152,7 @@ body {
   .addProduct {
     flex-direction: column;
   }
+
   .addProduct * {
     text-align: center;
   }
@@ -181,11 +187,17 @@ body {
     border-radius: 5px;
   }
   .mainHeading {
-    background-color: #000e47;
+    background-color: #051f1f;
     border-radius: 5px;
     padding: 25px 7px;
     font-weight: 700;
     font-size: 1rem;
+  }
+  #searchProducts {
+    font-size: 4.5vw;
+    &::placeholder {
+      font-size: 1rem;
+    }
   }
   .editQuantity {
     margin-right: 3px;
@@ -484,13 +496,14 @@ body {
   color: #c0caf4;
 }
 .addProductHeading {
-  /* padding: 34px !important; */
+  padding: 34px !important;
   height: 10vh;
   width: 100%;
-  /* margin: 0 0 20px 0; */
+  margin: 0 0 20px 0;
   border-radius: 3px;
   font-size: 2.5rem;
   border: none;
+  background: #001512;
 }
 #rsShow {
   position: absolute;
@@ -542,20 +555,26 @@ body {
   font-size: 1.5rem;
   width: 100%;
   /* height: 5vh; */
-  background-color: #000e47;
+  background-color: #224444;
   color: #fff;
   border-radius: 5px;
   transition: background-color 0.3s ease;
   &:hover {
-    background-color: #000e47;
-    color: #fff;
+    /* background-color: #000e47; */
+    /* color: #fff; */
   }
   &:focus {
     outline: none;
   }
 }
 #makeOrder {
+  width: 45vw;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a2222;
+  border-radius: 6px;
+  /* display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 10px;
@@ -574,7 +593,7 @@ body {
   }
   &:focus {
     outline: none;
-  }
+  } */
 }
 #shopKeeperName,
 #shopKeeperCity {
@@ -588,12 +607,24 @@ body {
   border: 1px solid #eee;
   border-radius: 5px;
   padding: 10px;
-  background-color: #000e47;
+  background-color: #0f2424;
   color: #fff;
   text-align: center;
   transition: background-color 0.3s ease;
+  background-color: #002c2c;
+
   &:hover {
-    background-color: #000e47;
+    background-color: #0a1e1e;
+    color: #fff;
+  }
+}
+#shopKeeperName:focus,
+#shopKeeperCity:focus {
+  outline: none;
+  border-color: #00bfa5;
+  box-shadow: 0 0 5px rgba(0, 191, 165, 0.4);
+  background-color: #005757;
+  &::placeholder {
     color: #fff;
   }
 }
@@ -603,7 +634,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  /* flex-direction: column; */
   gap: 10px;
 }
 .flex-centre {
@@ -707,7 +738,7 @@ body {
   }
 }
 button:disabled {
-  background-color: #670606 !important; /* Gray background for disabled state */
+  background-color: #001512 !important; /* Gray background for disabled state */
   color: #fff !important; /* Light gray text */
   cursor: not-allowed !important; /* Show a "not-allowed" cursor */
   opacity: 0.7 !important; /* Slightly transparent */
@@ -715,10 +746,11 @@ button:disabled {
 #searchProducts {
   width: 90%;
   padding: 10px;
+  /* font-size: 1.5rem; */
   font-size: 1.5rem;
   border: 1px solid #eee;
   border-radius: 5px;
-  background-color: #1c1c1c;
+  background-color: #002c2c;
   color: #fff;
   text-align: center;
   margin: 0 auto;
@@ -730,12 +762,15 @@ button:disabled {
   outline: none;
   border-color: #00bfa5;
   box-shadow: 0 0 5px rgba(0, 191, 165, 0.4);
-  background-color: #000a30;
+  background-color: #005757;
+  &::placeholder {
+    color: #fff;
+  }
 }
 #searchProducts::placeholder {
   text-align: center;
-  color: #ccc;
-  font-size: 1rem;
+  color: #bcbcbc;
+  font-size: 1.5rem;
 }
 /* styles.css */
 #toast-container {
@@ -811,4 +846,128 @@ body {
   display: none;
   align-items: center;
   justify-content: center;
+}
+/* make order btn style */
+.makeOrder-btn {
+  font-family: inherit;
+  font-size: 20px;
+  background: royalblue;
+  color: white;
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.makeOrder-btn span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+.makeOrder-btn svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.makeOrder-btn:hover .makeOrder-svg-wrapper {
+  animation: makeOrder-fly 0.6s ease-in-out infinite alternate;
+}
+
+.makeOrder-btn:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+.makeOrder-btn:hover span {
+  transform: translateX(5em);
+}
+
+.makeOrder-btn:active {
+  transform: scale(0.95);
+}
+
+@keyframes makeOrder-fly {
+  from {
+    transform: translateY(0.1em);
+  }
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+@media only screen and (max-width: 720px) {
+  .shopKeeperNameParent {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+  #shopKeeperName,
+  #shopKeeperCity {
+    width: 100%;
+    font-size: 4vw !important;
+    /* padding: 10px; */
+    &::placeholder {
+      font-size: 4.5vw !important;
+    }
+  }
+}
+.tooltip {
+  position: absolute;
+  background: #333;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: none;
+  top: 50px;
+  left: 0;
+  z-index: 999;
+  width: 100%;
+  font-size: 1.5vw;
+}
+
+#tooltipContainer {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.save-btn {
+  width: 45vw; /* Fixed width */
+  /* height: 50px; Fixed height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0a2222;
+  border-radius: 6px;
+  cursor: pointer;
+  padding: 8px;
+  transition: background-color 0.1s;
+  border: none;
+}
+
+.save-btn:hover {
+  background-color: #123939;
+}
+
+.save-btn:active {
+  border: 1px solid #bef264; /* lime-400 */
+}
+
+.save-icon {
+  fill: #64f2b4;
+}
+
+.save-text {
+  /* font-size: 1.5rem; */
+  color: #64f2b4;
+  font-weight: bold;
+  padding-right: 4px;
 }

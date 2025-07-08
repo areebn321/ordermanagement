@@ -147,6 +147,11 @@ nav {
   padding: 10px;
   color: #fff;
 }
+nav p:first-child {
+  background: #000;
+  text-align: center;
+}
+
 #showAllProducts {
   display: flex;
   align-items: center;
@@ -180,4 +185,9 @@ nav {
   &:hover {
     background-color: #555;
   }
+}
+.min-w {
+  /* width: 50%; */
+  padding: 10px;
+  font-size: xx-small;
 }

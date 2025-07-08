@@ -11,17 +11,24 @@ body {
   width: 100vw;
   color: #fff;
   display: flex;
-  /* align-items: center; */
   justify-content: center;
   overflow-x: hidden;
 }
 .allLedgersPar {
   display: flex;
   align-items: center;
-  /* justify-content: center; */
   flex-direction: column;
 }
-
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 10px;
+}
 .container {
   position: fixed;
   height: 100vh;
@@ -52,7 +59,6 @@ body {
 .table-container {
   margin-top: 2rem;
   position: relative;
-  /* overflow-x: auto; */
   width: 90vw;
 }
 
@@ -62,9 +68,9 @@ body {
   margin-bottom: 5rem;
   text-align: left;
   font-size: 0.875rem;
-  color: #cbd5e1; /* Equivalent to text-slate-400 */
+  color: #cbd5e1;
   border-collapse: collapse;
-  background-color: #1e293b; /* Equivalent to bg-slate-800 */
+  background-color: #1e293b;
 }
 
 .custom-table thead {

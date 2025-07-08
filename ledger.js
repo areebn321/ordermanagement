@@ -130,7 +130,7 @@ renderTable();
 showBal.addEventListener("click", (e) => {
   let totalBalance = 0;
   JSON.parse(localStorage.getItem("shopkeeperNamesList")).forEach((e) => {
-    totalBalance += parseInt(e.balance);
+    totalBalance += parseFloat(e.balance);
   });
   let hamburger = document.querySelector(".hamburger");
   hamburger.classList.toggle("active");

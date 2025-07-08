@@ -31,10 +31,14 @@ body {
 }
 
 h1 {
-  font-size: 36px;
+  font-size: 2.5rem;
   text-align: center;
 }
-
+.categories h1 {
+  /* font-size: 3rem; */
+  text-align: center;
+  margin-bottom: 10px;
+}
 .table-cell {
   border: 1px solid #fff;
   padding: 8px;
@@ -43,7 +47,7 @@ h1 {
 .table-container {
   width: 100%;
   margin: 20px auto;
-  overflow-x: auto;
+  /* overflow-x: auto; */
   max-height: 400px;
 }
 
@@ -58,10 +62,9 @@ h1 {
   background-color: rgb(87, 0, 9);
   color: #ffffff;
   position: sticky;
-  top: 0;
+  top: 13%;
   z-index: 1;
 }
-
 .edit-btn {
   background-color: #4caf50;
   color: #fff;
@@ -72,16 +75,18 @@ h1 {
   transition: all 0.5s;
 }
 
+.makeOrder {
+  width: 100%;
+  height: 25vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 .categories {
   width: 100%;
-  /* max-width: 1200px; */
   margin: 20px auto;
   text-align: center;
-}
-
-.categories h1 {
-  font-size: 24px;
-  margin-bottom: 10px;
 }
 
 .design-btn {
@@ -159,9 +164,9 @@ h1 {
   text-align: center;
   margin-bottom: 20px;
   font-size: 24px;
-  --color: #023f7f;
-  border-bottom: 2px solid var(--color);
-  box-shadow: 0 8px 5px var(--color);
+  --color: #0055af;
+  border-bottom: 3px solid var(--color);
+  box-shadow: 0 4px 8px var(--color);
 }
 
 th:nth-child(4) {
@@ -189,6 +194,9 @@ td:nth-child(4) {
   margin: 0 auto;
   margin-top: 20px;
   transition: background-color 0.3s ease;
+  border-color: #19b39e;
+  box-shadow: 0 0 5px rgba(26, 193, 170, 0.4);
+  background-color: #0b153c;
 }
 
 .findItem input:focus {
@@ -201,7 +209,7 @@ td:nth-child(4) {
 .findItem input::placeholder {
   text-align: center;
   color: #ccc;
-  font-size: 1.4rem;
+  font-size: 1.2rem;
 }
 
 .circle {

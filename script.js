@@ -100,7 +100,10 @@ document.getElementById("makeOrder").addEventListener("click", () => {
     showWhatsAppWindow();
   }
   if (shopKeeperName.value.trim().length > 0) {
+    // setTimeout(() => {
     makeOrder();
+    // }, 1000);
+
     makeOrderr.innerHTML = "Nothing to order";
     makeOrderr.disabled = true;
 
@@ -510,7 +513,7 @@ ${orderSummary}
     ).toFixed(2)}/-*
 `;
     let prvBal = currentShopkeeper.balance;
-    currentShopkeeper.balance = parseInt(prvBal) + parseInt(totalAmount);
+    currentShopkeeper.balance = parseFloat(prvBal) + parseFloat(totalAmount);
     shopkeeperList[DukanIndex] = currentShopkeeper;
     localStorage.setItem("shopkeeperNamesList", JSON.stringify(shopkeeperList));
   }
@@ -592,16 +595,23 @@ function showSuccess(message) {
     success.style.display = "none";
   }, 1000);
 }
-function calculateTotalPrice(items) {
+function calculateTotalPrice(items, price = 1) {
   let total = 0;
-
+  price = Number(price);
   // Loop through all item groups
   items.forEach((item) => {
     // Loop through each item in the group
     // itemGroup.forEach((item) => {
-    if (item.quantity && item.price) {
-      // Ensure the item has valid quantity and price
-      total += item.quantity * item.price;
+    if (price == 1) {
+      if (item.quantity && item.price) {
+        // Ensure the item has valid quantity and price
+        total += item.quantity * item.price;
+      }
+    } else if (price == 2) {
+      if (item.quantity && item.purchasedValue) {
+        // Ensure the item has valid quantity and price
+        total += item.quantity * item.purchasedValue;
+      }
     }
     // });
   });
@@ -613,19 +623,36 @@ showBalance.addEventListener("click", () => {
   let approve = window.confirm("Are you sure you want to show balance?");
   if (approve) {
     let calculateSpecificPrice = prompt("Of Which Category (In Number)");
+    if (!calculateSpecificPrice) return; // Exit if user cancels
+
     calculateSpecificPrice = Number(calculateSpecificPrice) - 1;
     let ll = JSON.parse(localStorage.getItem("products"))[
       calculateSpecificPrice
     ];
-    let totalCost = calculateTotalPrice(ll);
+    if (!ll) {
+      alert("Invalid category number");
+      return;
+    }
 
+    let prom;
+    while (true) {
+      prom = prompt("Enter 1 for selling price and 2 for purchased value");
+      if (prom === null) return; // Handle cancel button
+
+      prom = Number(prom);
+      if (prom === 1 || prom === 2) break; // Valid input, exit loop
+
+      alert("Please enter either 1 or 2"); // Invalid input, try again
+    }
+
+    let totalCost = calculateTotalPrice(ll, prom);
     let rsShowP = document.querySelector("#rsShowP");
     rsShowP.innerHTML = "Rs: " + totalCost + "/-";
     rsShow.classList.toggle("none");
-    // hamBurgerWhenOpen.classList.toggle("none");
     toggleHamBurgar();
   }
 });
+
 let rsShow_btn = document.querySelector(".rsShow_btn");
 rsShow_btn.addEventListener("click", () => {
   rsShow.classList.toggle("none");
@@ -715,8 +742,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const secondTable = document.getElementById("secondTable");
   const thirdTable = document.getElementById("thirdTable");
   const forthTable = document.getElementById("forthTable");
-
-  searchInput.addEventListener("input", function (e) {
+  const getSearchItems = function (e) {
     const term = e.target.value.toLowerCase();
     const items = productMenu.children;
     let found = false;
@@ -764,7 +790,6 @@ document.addEventListener("DOMContentLoaded", function () {
         noProduct.parentNode.removeChild(noProduct);
       }
     }
-  });
-
-  // ...existing code...
+  };
+  searchInput.addEventListener("input", (e) => getSearchItems(e));
 });

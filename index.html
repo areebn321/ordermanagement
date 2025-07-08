@@ -15,8 +15,32 @@
     <link rel="stylesheet" href="catagories.css" />
     <link rel="stylesheet" href="shopkeeperName.css" />
     <link rel="stylesheet" href="password.css" />
+    <style>
+      .addProductHeading {
+        margin-top: 6vh !important;
+      }
+      #totalBill {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background-color: #001512;
+        padding: 10px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        z-index: 1000;
+      }
+      #totalBillSpan {
+        font-size: 24px;
+        color: #00ff00;
+      }
+    </style>
   </head>
   <body>
+    <div id="totalBill">
+      Total Bill: Rs: <span id="totalBillSpan">0</span>/-
+    </div>
     <div class="insufficientStock">!</div>
     <!-- <div class="insufficientStock">Insufficient Stock!</div> -->
     <div id="toast-container"></div>
@@ -110,15 +134,43 @@
               placeholder="Enter Shopkeeper Name"
               autocomplete="off"
             />
-            <input
-              type="text"
-              id="shopKeeperCity"
-              class=""
-              placeholder="Enter City"
-              autocomplete="off"
-            />
+            <div id="tooltipContainer">
+              <input
+                type="text"
+                id="shopKeeperCity"
+                placeholder="Enter City"
+                autocomplete="off"
+              />
+              <div class="tooltip" id="cityTooltip">
+                Default Multan
+                <br />
+                "M" For Muzaffargarh <br />
+                "R" For Rahim Yar Khan
+              </div>
+            </div>
           </div>
-          <button class="box" id="makeOrder" disabled="true"></button>
+
+          <!-- <button class="box" id="makeOrder" disabled="true"></button> -->
+
+          <button class="makeOrder-btn" id="makeOrder" disabled="true">
+            <div class="makeOrder-svg-wrapper-1">
+              <div class="makeOrder-svg-wrapper">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  width="24"
+                  height="24"
+                >
+                  <path fill="none" d="M0 0h24v24H0z"></path>
+                  <path
+                    fill="currentColor"
+                    d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <span>Send</span>
+          </button>
         </div>
         <div class="catagoriesParent">
           <main class="catagoriesHeading">Select Categories Below</main>
@@ -196,16 +248,29 @@
         </div>
       </div>
     </div>
-    <script src="/script.js"></script>
-    <script src="/showMessages.js"></script>
-    <script src="/hamburger.js"></script>
-    <script src="/hamOptions.js"></script>
-    <script src="/backupCopyAndRestore.js"></script>
-    <script src="/catagories.js"></script>
-    <script src="/shopkeepName.js"></script>
-    <script src="/editCategoriy.js"></script>
-    <script src="/password.js"></script>
-    <script src="/addMakeOrderFunc.js"></script>
-    <script src="/showError.js"></script>
+    <script src="script.js"></script>
+    <script src="showMessages.js"></script>
+    <script src="hamburger.js"></script>
+    <script src="hamOptions.js"></script>
+    <script src="backupCopyAndRestore.js"></script>
+    <script src="catagories.js"></script>
+    <script src="shopkeepName.js"></script>
+    <script src="editCategoriy.js"></script>
+    <script src="password.js"></script>
+    <script src="addMakeOrderFunc.js"></script>
+    <script src="showError.js"></script>
+    <script src="totalBill.js"></script>
+    <script>
+      const input = document.getElementById('shopKeeperCity')
+      const tooltip = document.getElementById('cityTooltip')
+
+      input.addEventListener('focus', () => {
+        tooltip.style.display = 'block'
+      })
+
+      input.addEventListener('blur', () => {
+        tooltip.style.display = 'none'
+      })
+    </script>
   </body>
 </html>

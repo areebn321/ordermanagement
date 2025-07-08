@@ -11,7 +11,7 @@ function checkStockForError() {
         Number(product.quantity) <= Number(product.minStock) &&
         Number(product.quantity) != Number(product.minStock)
       ) {
-        console.log(product.name, product.quantity, product.minStock);
+        // console.log(product.name, product.quantity, product.minStock);
         length++;
       } else if (!product.hasOwnProperty("minStock")) {
         length++;

@@ -10,7 +10,7 @@
   left: 3%;
   height: 35px;
   z-index: 989999;
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 
 .hamburger_line {

@@ -42,9 +42,9 @@
 }
 
 .catagoriesParent > div > div:hover {
-  background-color: var(--hover-bg);
+  background-color: #133f3f;
   color: var(--main-color-2);
-  transform: scale(1.05) translateY(-5px);
+  /* transform: scale(1.05) translateY(-5px); */
 }
 
 .isActiveCategory {
@@ -179,7 +179,7 @@
   }
   #shopKeeperName {
     padding: 0;
-    font-size: 0.9rem !important;
+    /* font-size: 0.9rem !important; */
   }
   .addProductWithScreen h1 {
     width: 100%;
@@ -216,7 +216,8 @@
   border-radius: 5px;
 }
 .categoriesChild {
-  border-radius: 5px !important;
+  /* border-radius: 5px !important; */
+  border-radius: 65px !important;
 }
 
 .catagories {
